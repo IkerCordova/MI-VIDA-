@@ -842,6 +842,27 @@
   .pk-tiles b{display:block; font-family:'JetBrains Mono',monospace; font-size:15px; color:#f1d99a; font-weight:600;} .pk-tiles span{display:block; font-size:10px; color:#8a8a8a; margin-top:3px; line-height:1.25;}
   .pk-item{width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; background:transparent; border:none; border-bottom:1px solid #1a1a1b; padding:14px 2px; color:#fff; text-align:left; cursor:pointer;}
   .pk-item b{display:block; font-family:'Oswald',sans-serif; font-weight:500; font-size:16px;} .pk-item span{display:block; font-size:12px; color:#8a8a8a; margin-top:2px;} .pk-item i{font-style:normal; color:#555; font-size:22px;}
+  .fp-q{margin:10px 0 4px; padding:10px 12px; border-radius:12px; background:rgba(159,194,255,0.06); border:1px solid rgba(159,194,255,0.25);}
+  .fp-adj{margin-top:8px;} .fp-adj summary{list-style:none; cursor:pointer; font-size:12.5px; color:#9a9a9a; padding:6px 0;} .fp-adj summary::-webkit-details-marker{display:none;}
+  .pk-card.cam{background:radial-gradient(120% 140% at 100% 0, rgba(241,217,154,0.12), transparent 60%), #0f0f10;}
+  /* ===== v9: sin vida, todo apagado ===== */
+  .dead-lock{position:absolute; inset:0; z-index:60; display:none; overflow-y:auto; background:radial-gradient(120% 70% at 50% 25%, #2a0d0b 0%, #0a0303 55%, #000 100%); padding:calc(28px + env(safe-area-inset-top,0px)) 22px calc(28px + env(safe-area-inset-bottom,0px)); color:#fff; text-align:center;}
+  .dead-lock.show{display:flex; align-items:center; justify-content:center;}
+  .dl-in{width:100%; max-width:420px;}
+  .dl-k{font-size:10.5px; letter-spacing:0.18em; color:#ff8a7a;}
+  .dl-big{font-family:'Oswald',sans-serif; font-weight:700; font-size:clamp(52px,16vw,84px); line-height:0.95; letter-spacing:0.02em; margin:10px 0 12px; background:linear-gradient(180deg,#fff,#ff8a7a 70%,#a3241b); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .dead-lock.revived{background:radial-gradient(120% 70% at 50% 25%, #2a2210 0%, #0a0803 55%, #000 100%);} .dead-lock.revived .dl-big{background:linear-gradient(180deg,#fff,#f1d99a 70%,#a87a2a); -webkit-background-clip:text; background-clip:text;} .dead-lock.revived .dl-k{color:#f1d99a;}
+  .dl-s{font-size:14px; color:#d6c9c7; line-height:1.55;} .dl-s b{color:#fff;}
+  .dl-ring{position:relative; width:150px; height:150px; margin:22px auto 8px;} .dl-ring > div{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .dl-ring b{font-family:'Oswald',sans-serif; font-size:40px; line-height:1;} .dl-ring span{font-size:11px; color:#b8a9a7; margin-top:4px;}
+  .dl-runs{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-bottom:6px;} .dl-runs span{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#ffb4a8; border:1px solid rgba(255,120,100,0.3); border-radius:999px; padding:3px 9px;}
+  .dl-go{width:100%; margin-top:14px; border:none; border-radius:14px; padding:16px; background:#fff; color:#0a0a0a; font-family:'Oswald',sans-serif; font-weight:600; font-size:17px; letter-spacing:0.02em; cursor:pointer; box-shadow:0 10px 30px rgba(255,90,77,0.25);}
+  .dl-go.solid2{background:#ff5a4d; color:#fff;}
+  .dl-sec{width:100%; margin-top:10px; border:1px solid rgba(255,255,255,0.22); border-radius:14px; padding:13px; background:transparent; color:#fff; font-family:'Oswald',sans-serif; font-size:14px; cursor:pointer;}
+  .dl-form{display:grid; gap:10px; margin-top:12px; text-align:left;} .dl-form label{display:flex; flex-direction:column; gap:5px; font-size:12px; color:#b8a9a7;}
+  .dl-form input{background:#150908; border:1px solid #4a2420; border-radius:12px; padding:13px; color:#fff; font-family:'JetBrains Mono',monospace; font-size:17px;} .dl-form input:focus{outline:none; border-color:#ff8a7a;}
+  .dl-note{font-size:11.5px; color:#8c7c7a; margin-top:16px; line-height:1.5;}
+  body.is-dead #screen-world.pocket .pk-tabs{opacity:0.25;}
 </style>
 </head>
 <body>
@@ -916,6 +937,7 @@
       </div>
     </div>
     <div class="w-rec" id="wRec"></div>
+    <div class="dead-lock" id="deadLock" role="dialog" aria-label="Sin vida"></div>
     <header class="pk-head" id="pkHead"></header>
     <nav class="pk-tabs" id="pkTabs" aria-label="Secciones">
       <button data-pk="hoy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Hoy</button>
@@ -3252,6 +3274,7 @@ function currentWeekProgress(){
 function exclusivesOwned(chests){ const n=(chests||weeklyChests()).filter(c=>c.tier && c.tier.exclusive).length; return EXCLUSIVES.slice(0, n).map(x=>x.id); }
 
 /* ---------- Vida ---------- */
+function kmOn(d){ return runsLog.filter(r=>r.date===d).reduce((s,r)=>s+(+r.km||0),0); }
 function computeLife(chests){
   chests = chests || weeklyChests();
   const chestAt={}; chests.forEach(c=>{ if(c.hp) chestAt[addDaysStr(c.wk,7)]=c.hp; });
@@ -3259,7 +3282,7 @@ function computeLife(chests){
   const start=(hpStart && hpStart>gameStart) ? hpStart : (gameStart||t);
   for(let d=start; d<t; d=addDaysStr(d,1)){
     if(dead){
-      if(runsLog.some(r=>r.date===d && +r.km>=10)){ dead=false; hp=60; continue; }
+      if(kmOn(d)>=10){ dead=false; hp=60; continue; }
       deadDays.add(d); continue;
     }
     if(chestAt[d]) hp=Math.min(100, hp+chestAt[d]);
@@ -3267,7 +3290,7 @@ function computeLife(chests){
     if(hp<=0){ hp=0; dead=true; deathDate=d; deaths++; }
   }
   if(!dead && chestAt[t]) hp=Math.min(100, hp+chestAt[t]);
-  if(dead){ if(runsLog.some(r=>r.date===t && +r.km>=10)){ dead=false; hp=60; } else deadDays.add(t); }
+  if(dead){ if(kmOn(t)>=10){ dead=false; hp=60; } else deadDays.add(t); }
   return {hp, dead, deathDate, deadDays, deaths, todayRes:dayResult(t)};
 }
 
@@ -7802,7 +7825,7 @@ function repairBad(){ const D=fitDay(); const b=(D.bad||[]).find(x=>!x.fixed); i
 /* vida, XP y misiones */
 (function(){
   const _dr=dayResult; dayResult=function(d){ const r=_dr(d), p=foodPen(d); if(p){ r.delta-=p; r.pen=p; } return r; };
-  const _cl=computeLife; computeLife=function(ch){ const r=_cl(ch); if(!r.dead){ const p=foodPen(today()); if(p){ r.hp=Math.max(0, r.hp-p); } } return r; };
+  const _cl=computeLife; computeLife=function(ch){ const r=_cl(ch); if(!r.dead){ const p=foodPen(today()); if(p){ r.hp=Math.max(0, r.hp-p); if(r.hp<=0 && kmOn(today())<10){ r.dead=true; r.deathDate=today(); r.deadDays.add(today()); } } } return r; };
   const _xp=gameXP; gameXP=function(s){ const r=_xp(s); let v=0; const t=today();
     Object.keys(fitData.days||{}).forEach(d=>{ if(!gameStart || d<gameStart || d>t) return; const D=fitData.days[d]; if(D.ans) v+=5; if(D.done) v+=30; v+=mealsOn(d)*5; v-=badCount(d)*15; if(mealsOn(d)>=2 && !badCount(d)) v+=10; });
     r.parts['Físico y comida']=v; r.total+=v; return r; };
@@ -8022,23 +8045,22 @@ function foodLogHTML(){
   let pendHTML='';
   if(pend){
     if(pend.state==='loading') pendHTML=`<div class="fp-card"><div class="fp-top">${pend.thumb?`<img src="${pend.thumb}" alt="">`:''}<div><div class="ex-n">Calculando tu comida…</div><div class="ex-tip">Claude está viendo la foto: qué hay, cuánto y sus macros.</div></div></div><div class="fp-load"><i></i></div></div>`;
-    else if(pend.state==='nocl') pendHTML=`<div class="fp-card"><div class="fp-top">${pend.thumb?`<img src="${pend.thumb}" alt="">`:''}<div><div class="ex-n">Aquí no puedo leer la foto</div><div class="ex-tip">El cálculo con foto funciona en tu versión de Claude (en tu celular). Aquí agrégalo a mano abajo; la foto se guarda con lo que agregues.</div></div></div></div>`;
+    else if(pend.state==='nocl') pendHTML=`<div class="fp-card"><div class="fp-top">${pend.thumb?`<img src="${pend.thumb}" alt="">`:''}<div><div class="ex-n">Aquí no puedo calcular con la foto</div><div class="ex-tip">El cálculo automático con foto funciona en tu versión dentro de Claude. Aquí toca la comida de la lista o escríbela; la foto se guarda con lo que agregues.</div></div></div></div>`;
     else if(pend.state==='err') pendHTML=`<div class="fp-card"><div class="ex-n">No se pudo calcular</div><div class="ex-tip">${esc(pend.msg||'Intenta con otra foto con mejor luz, o agrégalo a mano.')}</div><button class="w-go" id="fpX" style="margin-top:8px;">Cerrar</button></div>`;
-    else if(pend.state==='ok'){ const r=pend.r, k=pend.mult||1;
-      pendHTML=`<div class="fp-card ok"><div class="fp-top">${pend.thumb?`<img src="${pend.thumb}" alt="">`:''}<div><div class="ft-k">LO QUE VA EN TU PLATO</div><div class="ex-n">${esc(r.platillo||'Tu comida')}</div><div class="fp-kc"><b>${Math.round(r.kcal*k)}</b> kcal</div></div></div>
+    else if(pend.state==='ok'){ const r=pend.r, k=pend.mult||1, q=r.pregunta;
+      pendHTML=`<div class="fp-card ok"><div class="fp-top">${pend.thumb?`<img src="${pend.thumb}" alt="">`:''}<div><div class="ft-k">GUARDADO EN TU DÍA ✓</div><div class="ex-n">${esc(r.platillo||'Tu comida')}</div><div class="fp-kc"><b>${Math.round(r.kcal*k)}</b> kcal</div></div></div>
         <div class="fp-mac"><span>Proteína <b>${Math.round(r.p*k)} g</b></span><span>Carbs <b>${Math.round(r.c*k)} g</b></span><span>Grasa <b>${Math.round(r.f*k)} g</b></span></div>
+        ${q && !pend.answered?`<div class="fp-q"><div class="ex-n" style="font-size:14px;">${esc(q.texto)}</div><div class="w-chips" style="margin-top:8px;">${q.opciones.map((o,i)=>`<button type="button" class="w-chip" data-qa="${i}">${esc(o.texto)}</button>`).join('')}</div></div>`:''}
         ${(r.items||[]).map(it=>`<div class="w-xprow"><span>${esc(it.nombre)}${it.porcion?` <em>${esc(it.porcion)}</em>`:''}</span><b>${Math.round((+it.kcal||0)*k)} kcal</b></div>`).join('')}
-        <div class="w-sec" style="margin:10px 0 6px;font-size:13px;">¿Te vas a comer todo?</div>
-        <div class="w-chips" id="fpMult">${[[0.5,'La mitad'],[0.75,'¾'],[1,'Todo'],[1.5,'1½'],[2,'Doble']].map(([v,n])=>`<button type="button" class="w-chip ${k===v?'on':''}" data-m="${v}">${n}</button>`).join('')}</div>
         ${r.consejo?`<div class="lr-a" style="margin-top:10px;"><span>Tu coach</span>${esc(r.consejo)}</div>`:''}
-        ${r.antojo?`<div class="w-note warn" style="margin-top:8px;">Esto parece ${r.antojo==='bebida'?'una bebida con azúcar':r.antojo==='postre'?'un postre':'comida chatarra'}. Si te lo comes, regístralo como antojo abajo.</div>`:''}
-        <div class="w-form two" style="margin:10px 0 0;"><button class="w-go solid" id="fpSave">Guardar en mi día</button><button class="w-go" id="fpX">Descartar</button></div>
-        <div class="gm-attr" style="padding:8px 0 0;">Cálculo aproximado con la foto. Si sabes los gramos exactos, ajusta con la porción.</div></div>`; }
+        ${r.antojo && !pend.badDone?`<div class="fd-fix" style="margin-top:10px;"><div class="ex-n" style="font-size:14px;">Esto es ${r.antojo==='bebida'?'una bebida con azúcar':r.antojo==='postre'?'un postre':'comida chatarra'}</div><div class="ex-tip">Cuenta como antojo: −6 de vida y $50 para tu meta.</div><div class="w-form two" style="margin:8px 0 0;"><button class="w-go solid" id="fpBad">Registrar castigo</button><button class="w-go" id="fpNoBad">No lo comí</button></div></div>`:''}
+        <details class="fp-adj"><summary>¿No te lo comiste todo?</summary><div class="w-chips" id="fpMult" style="margin-top:8px;">${[[0.5,'La mitad'],[0.75,'¾'],[1,'Todo'],[1.5,'1½'],[2,'Doble']].map(([v,n])=>`<button type="button" class="w-chip ${k===v?'on':''}" data-m="${v}">${n}</button>`).join('')}</div></details>
+        <div class="w-form two" style="margin:10px 0 0;"><button class="w-go" id="fpOk">Listo</button><button class="w-go ghost" id="fpDel">Quitar</button></div></div>`; }
   }
   return `<div class="w-sec" style="margin-top:14px;">Lo que llevas hoy</div>
     <div class="mc-card">${bar('Calorías',T.kcal,M.kcal,'','#f1d99a')}${bar('Proteína',T.p,M.prot,' g','#9fe39f')}${bar('Carbs',T.c,M.carb,' g','#9fc2ff')}${bar('Grasa',T.f,M.fat,' g','#e8b38a')}
       <div class="mc-left">${T.kcal<M.kcal?`Te quedan <b>${wFmt(M.kcal-T.kcal)} kcal</b> y <b>${Math.max(0,Math.round(M.prot-T.p))} g de proteína</b> hoy.`:`Ya llegaste a tus calorías de hoy.`}</div></div>
-    <div class="fp-btns"><label class="w-go solid fp-cam"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" style="margin-right:6px"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Foto de tu comida<input type="file" id="fpFile" accept="image/*" capture="environment" hidden></label><button class="w-go" id="fpManual">Agregar a mano</button></div>
+    <div class="fp-btns"><label class="w-go solid fp-cam"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" style="margin-right:6px"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Foto de tu comida<input type="file" id="fpFile" accept="image/*" hidden></label><button class="w-go" id="fpManual">Agregar a mano</button></div>
     ${pendHTML}
     <div id="fpManualBox" class="fp-manual" style="display:none;">
       <div class="w-chips fp-db">${FOOD_DB.map((f,i)=>`<button type="button" class="w-chip" data-db="${i}">${f[0]} <em>${f[1]}</em></button>`).join('')}</div>
@@ -8050,6 +8072,13 @@ function foodLogHTML(){
 function addFood(e){ const t=today(), D=fitDay(t); D.food=D.food||[]; D.food.push(Object.assign({id:'f'+Date.now().toString(36), ts:Date.now()}, e)); fitSave(); fitSyncNutri(t); const T=foodTot(t), M=fitMacros();
   if(W && W.avatar && currentScreen==='world') setPose(W.avatar,'drink',2);
   worldToast(`${e.name} · ${Math.round(e.kcal)} kcal`, `Hoy: ${wFmt(T.kcal)}/${wFmt(M.kcal)} kcal · ${Math.round(T.p)}/${M.prot} g proteína`); scheduleGameCheck(); }
+function foodAutoSave(){
+  const P=FOOD_PENDING; if(!P || P.state!=='ok') return; const k=P.mult||1, r=P.r, t=today(), D=fitDay(t); D.food=D.food||[];
+  const e={name:r.platillo+(k!==1?` (×${k})`:''), kcal:r.kcal*k, p:r.p*k, c:r.c*k, f:r.f*k, thumb:P.thumb, src:'foto', antojo:r.antojo};
+  const ex=P.entryId && D.food.find(x=>x.id===P.entryId);
+  if(ex){ Object.assign(ex, e); fitSave(); fitSyncNutri(t); scheduleGameCheck(); }
+  else { addFood(e); P.entryId=D.food[D.food.length-1].id; }
+}
 function imgToBlob(file, max, q){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(file), im=new Image(); im.onload=()=>{ const s=Math.min(1, max/Math.max(im.width,im.height)), c=document.createElement('canvas'); c.width=Math.round(im.width*s); c.height=Math.round(im.height*s); c.getContext('2d').drawImage(im,0,0,c.width,c.height); URL.revokeObjectURL(u); c.toBlob(b=>b?res({blob:b, url:c.toDataURL('image/jpeg', q)}):rej(new Error('img')), 'image/jpeg', q); }; im.onerror=()=>{ URL.revokeObjectURL(u); rej(new Error('img')); }; im.src=u; }); }
 async function analyzeFoodPhoto(file){
   let thumb=null, big=null;
@@ -8060,10 +8089,12 @@ async function analyzeFoodPhoto(file){
   const M=fitMacros();
   const prompt=`La imagen es una foto de la comida que Iker (Tepic, México) se va a comer. Identifica cada alimento del plato, estima la porción (en gramos o piezas, con base en el tamaño del plato y utensilios) y calcula calorías y macros con tablas nutricionales estándar. Sé realista con aceites, salsas, quesos y tortillas.
 Su meta diaria: ${M.kcal} kcal, ${M.prot} g proteína, ${M.carb} g carbs, ${M.fat} g grasa (bajar grasa sin perder músculo).
-Responde SOLO JSON: {"platillo":"nombre corto","items":[{"nombre":"...","porcion":"ej. 150 g o 3 piezas","kcal":0,"proteina":0,"carbs":0,"grasa":0}],"total":{"kcal":0,"proteina":0,"carbs":0,"grasa":0},"antojo":null o "bebida" o "postre" o "chatarra","consejo":"una frase corta en español sobre cómo encaja en su día"}. Si la foto no es comida, responde {"error":"no es comida"}.`;
+Responde SOLO JSON: {"platillo":"nombre corto","items":[{"nombre":"...","porcion":"ej. 150 g o 3 piezas","kcal":0,"proteina":0,"carbs":0,"grasa":0}],"total":{"kcal":0,"proteina":0,"carbs":0,"grasa":0},"antojo":null o "bebida" o "postre" o "chatarra","consejo":"una frase corta en español sobre cómo encaja en su día","pregunta":null}.
+Calcula todo tú sin pedir datos. SOLO si hay algo que cambia mucho las calorías y no se puede saber por la foto (por ejemplo, si un refresco es normal o sin azúcar, o si el café lleva leche y azúcar), pon en "pregunta" {"texto":"pregunta corta","opciones":[{"texto":"opción","kcal":0,"proteina":0,"carbs":0,"grasa":0,"antojo":null o "bebida" o "postre" o "chatarra"}]} con 2 o 3 opciones y los totales del plato completo para cada una; usa en "total" la opción más probable. Si la foto no es comida, responde {"error":"no es comida"}.`;
   try{ const r=await s.json(prompt,{images:[big], modelTier:'default'});
     if(!r || r.error || !r.total){ FOOD_PENDING={state:'err', thumb, msg:r&&r.error?'Eso no parece comida. Intenta otra foto.':'No pude leer bien la foto.'}; }
-    else FOOD_PENDING={state:'ok', thumb, mult:1, r:{platillo:String(r.platillo||'Tu comida').slice(0,60), items:(r.items||[]).slice(0,10), kcal:+r.total.kcal||0, p:+r.total.proteina||0, c:+r.total.carbs||0, f:+r.total.grasa||0, antojo:['bebida','postre','chatarra'].includes(r.antojo)?r.antojo:null, consejo:String(r.consejo||'').slice(0,200)}};
+    else FOOD_PENDING={state:'ok', thumb, mult:1, r:{platillo:String(r.platillo||'Tu comida').slice(0,60), items:(r.items||[]).slice(0,10), kcal:+r.total.kcal||0, p:+r.total.proteina||0, c:+r.total.carbs||0, f:+r.total.grasa||0, antojo:['bebida','postre','chatarra'].includes(r.antojo)?r.antojo:null, consejo:String(r.consejo||'').slice(0,200), pregunta:(r.pregunta && Array.isArray(r.pregunta.opciones) && r.pregunta.opciones.length>1)?{texto:String(r.pregunta.texto||'¿Cuál es?').slice(0,90), opciones:r.pregunta.opciones.slice(0,3).map(o=>({texto:String(o.texto||'').slice(0,40), kcal:+o.kcal||0, p:+o.proteina||0, c:+o.carbs||0, f:+o.grasa||0, antojo:('antojo' in o)?(['bebida','postre','chatarra'].includes(o.antojo)?o.antojo:null):undefined}))}:null}};
+    if(FOOD_PENDING.state==='ok') foodAutoSave();
   }catch(e){ FOOD_PENDING={state:'err', thumb, msg: e && e.code==='not_granted' ? 'Necesitas dar permiso para que Claude vea la foto.' : e && e.code==='rate_limited' ? 'Espera un momento e intenta otra vez.' : 'No se pudo calcular. Intenta otra vez o agrégalo a mano.'}; }
   openFisico('comida',true);
 }
@@ -8072,8 +8103,12 @@ function bindFoodLog(){
   if($('fpFile')) $('fpFile').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) analyzeFoodPhoto(f); };
   if($('fpManual')) $('fpManual').onclick=()=>{ const b=$('fpManualBox'); b.style.display=b.style.display==='none'?'block':'none'; };
   if($('fpX')) $('fpX').onclick=()=>{ FOOD_PENDING=null; openFisico('comida',true); };
-  document.querySelectorAll('#fpMult [data-m]').forEach(b=>b.addEventListener('click',()=>{ FOOD_PENDING.mult=+b.dataset.m; openFisico('comida',true); }));
-  if($('fpSave')) $('fpSave').onclick=()=>{ const P=FOOD_PENDING, k=P.mult||1, r=P.r; addFood({name:r.platillo+(k!==1?` (×${k})`:''), kcal:r.kcal*k, p:r.p*k, c:r.c*k, f:r.f*k, thumb:P.thumb, src:'foto', antojo:r.antojo}); FOOD_PENDING=null; openFisico('comida',true); };
+  document.querySelectorAll('#fpMult [data-m]').forEach(b=>b.addEventListener('click',()=>{ FOOD_PENDING.mult=+b.dataset.m; foodAutoSave(); openFisico('comida',true); }));
+  document.querySelectorAll('[data-qa]').forEach(b=>b.addEventListener('click',()=>{ const P=FOOD_PENDING, o=P.r.pregunta.opciones[+b.dataset.qa]; Object.assign(P.r,{kcal:o.kcal||P.r.kcal, p:o.p, c:o.c, f:o.f}); P.r.platillo=P.r.platillo+' · '+o.texto; P.answered=true; if(o.antojo!==undefined) P.r.antojo=o.antojo; else if(/sin az[uú]car|light|zero|cero|diet/i.test(o.texto)) P.r.antojo=null; P.r.items=[]; foodAutoSave(); openFisico('comida',true); }));
+  if($('fpOk')) $('fpOk').onclick=()=>{ FOOD_PENDING=null; openFisico('comida',true); };
+  if($('fpDel')) $('fpDel').onclick=()=>{ const P=FOOD_PENDING; if(P && P.entryId){ const D=fitDay(); D.food=(D.food||[]).filter(x=>x.id!==P.entryId); fitSave(); fitSyncNutri(today()); scheduleGameCheck(); } FOOD_PENDING=null; openFisico('comida',true); };
+  if($('fpBad')) $('fpBad').onclick=()=>{ const k=FOOD_PENDING.r.antojo; FOOD_PENDING.badDone=true; logBad(k); FOOD_PENDING=null; };
+  if($('fpNoBad')) $('fpNoBad').onclick=()=>{ FOOD_PENDING.badDone=true; openFisico('comida',true); };
   document.querySelectorAll('[data-db]').forEach(b=>b.addEventListener('click',()=>{ const f=FOOD_DB[+b.dataset.db]; const thumb=FOOD_PENDING&&FOOD_PENDING.thumb||null; addFood({name:`${f[0]} (${f[1]})`, kcal:f[2], p:f[3], c:f[4], f:f[5], src:'mano', thumb}); if(thumb) FOOD_PENDING=null; if(f[6]) setTimeout(()=>{ if(confirm(`${f[0]} cuenta como antojo. ¿Registrar el castigo?`)) logBad(f[6]); else openFisico('comida',true); }, 300); else openFisico('comida',true); }));
   if($('fmAdd')) $('fmAdd').onclick=()=>{ const n=$('fmName').value.trim(), k=+$('fmK').value||0; if(!n||!k){ alert('Pon qué comiste y sus calorías.'); return; } const thumb=FOOD_PENDING&&FOOD_PENDING.thumb||null; addFood({name:n, kcal:k, p:+$('fmP').value||0, c:+$('fmC').value||0, f:+$('fmF').value||0, src:'mano', thumb}); FOOD_PENDING=null; openFisico('comida',true); };
   document.querySelectorAll('[data-fdel]').forEach(b=>b.addEventListener('click',()=>{ const D=fitDay(); D.food=(D.food||[]).filter(x=>x.id!==b.dataset.fdel); fitSave(); fitSyncNutri(today()); openFisico('comida',true); }));
@@ -8169,8 +8204,9 @@ const PK_MISSION = {
 };
 function pocketHoy(){
   const t=today(), h=nowHour(), snap=gameSnapshot(), res=snap.life.todayRes, fl=flashStatus(t), D=fitPeek(t)||{}, weighed=weightLog.some(e=>e.date===t), nr=nextRoutineStep(t);
-  const cards=[];
+  const cards=[], T0=foodTot(t), M0=fitMacros();
   if(activeSession && pkMin) cards.push(`<button class="pk-card live" id="pkBack"><i class="pk-dot"></i><div><div class="pk-ck">EN SESIÓN</div><div class="pk-ct">${ACT[activeSession.act].name} · <b data-pksess>${fmtLeft(sessionElapsed())}</b></div></div><span>Volver</span></button>`);
+  if(h>=11.5 || T0.kcal>0) cards.push(`<label class="pk-card cam"><div><div class="pk-ck">TU COMIDA · ${wFmt(T0.kcal)}/${wFmt(M0.kcal)} KCAL</div><div class="pk-ct">¿Qué vas a comer?</div><div class="pk-cs">Tómale foto y se calcula y se guarda solo.</div></div><span>📷 Foto</span><input type="file" id="pkFood" accept="image/*" hidden></label>`);
   if(!weighed) cards.push(`<button class="pk-card gold" id="pkWeigh"><div><div class="pk-ck">TODOS LOS DÍAS</div><div class="pk-ct">Pésate hoy</div><div class="pk-cs">Recién despierto, antes de comer o tomar agua.</div></div><span>Pesarme</span></button>`);
   if(!D.ans && h<20) cards.push(`<button class="pk-card" id="pkFit"><div><div class="pk-ck">TU ENTRENO</div><div class="pk-ct">¿Qué vas a hacer hoy?</div><div class="pk-cs">Contesta y te diseño el entreno del día.</div></div><span>Diseñar</span></button>`);
   else if(D.plan && !D.done){ const tot=D.plan.ex.reduce((s,e)=>s+e.sets,0), dn=D.plan.ex.reduce((s,e,i)=>s+Math.min(e.sets,((D.sets||{})[i]||[]).length),0); cards.push(`<button class="pk-card" id="pkFit"><div><div class="pk-ck">TU ENTRENO DE HOY</div><div class="pk-ct">${esc(D.plan.name)}</div><div class="pk-cs">${dn}/${tot} series · ≈ ${D.plan.est} min</div></div><span>Abrir</span></button>`); }
@@ -8188,6 +8224,7 @@ function pocketHoy(){
     <button class="w-go wide" id="pkRetos">Ver tareas, retos de la semana y cofre</button>`);
   const $=id=>document.getElementById(id);
   if($('pkBack')) $('pkBack').onclick=()=>stageSession(true);
+  if($('pkFood')) $('pkFood').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; FIT_TAB='comida'; pocketTab('fisico'); analyzeFoodPhoto(f); };
   if($('pkWeigh')) $('pkWeigh').onclick=()=>runRoutineStep('weigh');
   if($('pkFit')) $('pkFit').onclick=()=>{ pkTab='fisico'; FIT_TAB='hoy'; pocketTab('fisico'); };
   if($('pkRout')) $('pkRout').onclick=()=>openRutina();
@@ -8207,6 +8244,51 @@ function pocketMas(){
   items.forEach(([k,,,fn])=>{ const b=document.querySelector(`[data-mi="${k}"]`); if(b) b.onclick=fn; });
   document.getElementById('pk3d').onclick=()=>{ if(confirm('El mundo 3D usa más batería y memoria. ¿Abrirlo en este celular?')) setAppMode('3d'); };
 }
+
+/* =====================================================================
+   SIN VIDA: todo el juego se apaga.
+   Solo se reinicia corriendo 10 km en un mismo día (pueden ser varias
+   corridas que sumen 10). Mientras tanto, la única puerta es correr.
+===================================================================== */
+let _deadWas=null, _deadKmOpen=false;
+function deadState(){ try{ return gameSnapshot().life; }catch(e){ return {dead:false}; } }
+function renderDeadLock(){
+  const el=document.getElementById('deadLock'); if(!el) return; if(el.classList.contains('revived')) return;
+  const L=deadState(), running=activeSession && activeSession.act==='run';
+  if(_deadWas===true && !L.dead){ _deadWas=false; el.classList.add('show','revived'); el.innerHTML=`<div class="dl-in"><div class="dl-k">LO LOGRASTE</div><div class="dl-big">REVIVISTE</div><div class="dl-s">Corriste tus 10 km. Empiezas con 60 de vida. Vuelve a ganarte todo.</div><button class="dl-go" id="dlOk">Volver a mi vida</button></div>`;
+    document.getElementById('dlOk').onclick=()=>{ el.classList.remove('show','revived'); if(typeof POCKET!=='undefined' && POCKET) pocketTab('hoy'); else if(W && W.avatar){ setPose(W.avatar,'celebrate',3); } }; return; }
+  _deadWas=!!L.dead;
+  const show = L.dead && currentScreen==='world' && !running;
+  el.classList.toggle('show', !!show); document.body.classList.toggle('is-dead', !!L.dead);
+  if(!show){ if(!L.dead) el.innerHTML=''; return; }
+  const t=today(), km=Math.round(kmOn(t)*10)/10, pct=Math.min(1, km/10), runs=runsLog.filter(r=>r.date===t);
+  const since=L.deathDate ? fmtDate(L.deathDate) : 'hoy', R=54, C=2*Math.PI*R;
+  el.innerHTML=`<div class="dl-in">
+    <div class="dl-k">${esc(worldPlayerName())} · SIN VIDA DESDE EL ${since.toUpperCase()}</div>
+    <div class="dl-big">GAME OVER</div>
+    <div class="dl-s">Todo tu juego está apagado: misiones, retos, XP, negocios y entrenos. La única forma de volver es correr <b>10 km en un mismo día</b>.</div>
+    <div class="dl-ring"><svg viewBox="0 0 128 128" width="150" height="150"><circle cx="64" cy="64" r="${R}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="9"/><circle cx="64" cy="64" r="${R}" fill="none" stroke="#ff5a4d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pct)).toFixed(1)}" transform="rotate(-90 64 64)"/></svg><div><b>${km}</b><span>de 10 km hoy</span></div></div>
+    ${runs.length?`<div class="dl-runs">${runs.map(r=>`<span>${(+r.km).toFixed(1)} km${r.min?` · ${r.min} min`:''}</span>`).join('')}</div>`:''}
+    <button class="dl-go" id="dlRun">▶ Correr para revivir</button>
+    ${_deadKmOpen?`<div class="dl-form"><label>¿Cuántos km corriste?<input type="number" id="dlKm" min="0.1" max="60" step="0.1" inputmode="decimal" placeholder="5.0"></label><label>¿Cuántos minutos?<input type="number" id="dlMin" min="1" max="600" inputmode="numeric" placeholder="35"></label><button class="dl-go solid2" id="dlSave">Guardar corrida</button></div>`
+      :`<button class="dl-sec" id="dlLog">Ya corrí (con mi reloj o Strava): registrar km</button>`}
+    <div class="dl-note">Pueden ser varias corridas que sumen 10 km antes de las 12 de la noche. Al revivir empiezas con 60 de vida. Tus datos están a salvo.</div></div>`;
+  const $=id=>document.getElementById(id);
+  $('dlRun').onclick=()=>{ el.classList.remove('show'); startSession('run'); };
+  if($('dlLog')) $('dlLog').onclick=()=>{ _deadKmOpen=true; renderDeadLock(); setTimeout(()=>{ const i=$('dlKm'); if(i) i.focus(); },50); };
+  if($('dlSave')) $('dlSave').onclick=()=>{ const k=parseFloat($('dlKm').value)||0, m=parseInt($('dlMin').value)||0; if(k<0.1||k>60){ alert('Pon los kilómetros que corriste.'); return; }
+    if(m && k/(m/60)>25){ alert('Ese ritmo es demasiado rápido para correr. Revisa los km o los minutos.'); return; }
+    runsLog.push({date:t, km:Math.round(k*10)/10, min:m||0, manual:true}); saveJSON('game3-runs', runsLog); _deadKmOpen=false;
+    const now=Math.round(kmOn(t)*10)/10; if(now<10) worldToast(`${now} de 10 km`, `Te faltan ${Math.round((10-now)*10)/10} km hoy`); scheduleGameCheck(); setTimeout(renderDeadLock, 250); };
+}
+(function(){
+  const _gc=gameCheck; gameCheck=function(){ const r=_gc.apply(this, arguments); renderDeadLock(); return r; };
+  const _ex=exitSessionMode; exitSessionMode=function(){ const r=_ex.apply(this, arguments); setTimeout(renderDeadLock, 300); return r; };
+  const _ew=enterWorld; enterWorld=function(){ const r=_ew.apply(this, arguments); setTimeout(renderDeadLock, 700); return r; };
+  setInterval(()=>{ if(currentScreen==='world') renderDeadLock(); }, 30000);
+  /* mientras estás sin vida no se puede iniciar nada más que correr */
+  const _ss=startSession; startSession=function(act){ if(act!=='run' && deadState().dead){ renderDeadLock(); return; } return _ss.apply(this, arguments); };
+})();
 
 /* =====================================================================
    INIT
