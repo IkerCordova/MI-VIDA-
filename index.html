@@ -908,6 +908,8 @@
     <button class="w-cam w-glass" id="wCamBtn">Ver casa</button>
     <div class="w-tools">
       <button class="w-tool w-glass" id="wFit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg><span>Físico</span></button>
+      <button class="w-tool w-glass" id="wMoney"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M9.3 9.2h4a1.9 1.9 0 0 1 0 3.8h-2.6a1.9 1.9 0 0 0 0 3.8H15"/></svg><span>Dinero</span></button>
+      <button class="w-tool w-glass" id="wAlbum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3.2L9 4.8h6L16.8 7H20v13H4z"/><circle cx="12" cy="13" r="3.4"/></svg><span>Álbum</span></button>
       <button class="w-tool w-glass" id="wMotiv"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 2.3c.8 2.8-1.7 3.9-1.9 6.4-.1 1.6 1 2.8 2.4 2.8 1.7 0 2.6-1.4 2.5-2.9 1.6 1.4 2.5 3.6 2.5 5.6a6 6 0 0 1-12 0c0-4.7 3.4-7.4 6.5-11.9z"/></svg><span>Motívame</span></button>
       <button class="w-tool w-glass" id="wLearn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 2z"/></svg><span>Aprende</span></button>
       <button class="w-tool w-glass" id="wRecBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3z"/></svg><span>Grabar</span><em id="wRecN"></em></button>
@@ -942,8 +944,8 @@
     <nav class="pk-tabs" id="pkTabs" aria-label="Secciones">
       <button data-pk="hoy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Hoy</button>
       <button data-pk="fisico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Físico</button>
-      <button data-pk="grabar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3z"/></svg>Grabar</button>
-      <button data-pk="notas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Notas</button>
+      <button data-pk="dinero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M9.3 9.2h4a1.9 1.9 0 0 1 0 3.8h-2.6a1.9 1.9 0 0 0 0 3.8H15"/></svg>Dinero</button>
+      <button data-pk="album"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3.2L9 4.8h6L16.8 7H20v13H4z"/><circle cx="12" cy="13" r="3.4"/></svg>Álbum</button>
       <button data-pk="mas"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>Más</button>
     </nav>
     <div class="w-daily" id="wDaily"></div>
@@ -2962,7 +2964,7 @@ const XP_RULES = [
   ['Grabar tu caminata o carrera (antes de las 6: +15 más)', '+25'],
   ['Video grabado o editado', '+30'],
   ['Ayuno hasta las 12', '+20'],
-  ['1 hora de cardio', '+25'],
+  ['10,000 pasos en el día', '+25'],
   ['Prospecto nuevo en tu calle', '+10'],
   ['Propuesta enviada', '+40'],
   ['Cliente cerrado (más el hito y el dinero)', '+150'],
@@ -3099,7 +3101,7 @@ const TASKS_DAILY = [
   {id:'estudio',     name:'1 hora de estudio para la escuela',       xp:25, cat:'Escuela'},
   {id:'tareas',      name:'Entregar tus tareas a tiempo',            xp:15, cat:'Escuela'},
   {id:'cama',        name:'Tender tu cama y ordenar tu cuarto',      xp:10, cat:'Disciplina'},
-  {id:'despertar',   name:'Levantarte a las 4:30 sin posponer',       xp:15, cat:'Disciplina'},
+  {id:'despertar',   name:'Levantarte a las 6:00 sin posponer',       xp:15, cat:'Disciplina'},
   {id:'dormir',      name:'Acostarte antes de las 9:30',             xp:15, cat:'Sueño'},
   {id:'contenido',   name:'Publicar contenido de Vantia',            xp:30, cat:'Vantia'},
   {id:'seguimiento', name:'Dar seguimiento a 2 prospectos',          xp:25, cat:'Vantia'},
@@ -3144,14 +3146,14 @@ const MILESTONES = [
 const ALLD = [0,1,2,3,4,5,6];
 const FLASH = [
   {id:'f_sleep',   days:ALLD,        until:9.5,  xp:25,  x2:true, name:'Registra tu noche de 7h o más',          screen:'sueno',     check:t=>sleepLog.some(e=>e.date===t && e.hours>=SLEEP_GOAL)},
-  {id:'f_morning', days:ALLD,        until:7,    xp:30,  x2:true, name:'Rutina de la mañana antes de las 7',     screen:'rutina',    check:t=>routineDone(t)},
-  {id:'f_rec',     days:ALLD,        until:6.5,  xp:60,           name:'Grabar tu caminata o carrera de madrugada', screen:'rutina', check:t=>recordedDay(t)},
+  {id:'f_morning', days:ALLD,        until:8.5,  xp:30,  x2:true, name:'Rutina de la mañana antes de las 8:30',     screen:'rutina',    check:t=>routineDone(t)},
+  {id:'f_rec',     days:ALLD,        until:8,    xp:60,           name:'Grabar tu caminata o carrera de la mañana', screen:'rutina', check:t=>recordedDay(t)},
   {id:'f_deep',    days:ALLD,        until:9,    xp:20,  x2:true, name:'1 hora de Deep Work antes de las 9',     screen:'dinero',    check:t=>(dinero.deepworkLog[t]||0)>=1},
   {id:'f_video',   days:ALLD,        until:11,   xp:30,  x2:true, name:'Video grabado o editado antes de las 11', screen:'rutina',   check:t=>videoDone(t)},
   {id:'f_calls',   days:[1,2,3,4,5], until:14,   xp:24,  x2:true, name:'3 llamadas de prospección',              screen:'dinero',    check:t=>(dinero.callsLog[t]||0)>=3},
   {id:'f_visit',   days:[1,2,3,4,5], until:17,   xp:60,           name:'Visitar 1 negocio en persona',           screen:'dinero',    check:t=>(dinero.visitsLog[t]||0)>=1},
   {id:'f_gym',     days:ALLD,        until:19,   xp:60,  x2:true, name:'Gym antes de las 7 pm',                  screen:'fisico',    check:t=>gymSessions.some(e=>e.date===t && (+e.hours||0)>=1)},
-  {id:'f_cardio',  days:ALLD,        until:20,   xp:25,  x2:true, name:'1 hora de cardio antes de las 8 pm',     screen:'correr',    check:t=>cardioMin(t)>=60},
+  {id:'f_cardio',  days:ALLD,        until:20,   xp:25,  x2:true, name:'10,000 pasos antes de las 8 pm',         screen:'correr',    check:t=>stepsOn(t)>=10000},
   {id:'f_read',    days:ALLD,        until:21,   xp:25,           name:'Leer 10 páginas o 30 min',               screen:'lectura',   check:t=>dayMeetsReadGoal(t)},
   {id:'f_nutri',   days:ALLD,        until:22,   xp:30,  x2:true, name:'Cumplir tus macros',                     screen:'nutricion', check:t=>!!nutriDates[t]},
   {id:'f_tasks3',  days:ALLD,        until:20,   xp:45,           name:'3 tareas extra',                         screen:'tareas',    check:t=>Object.values(tasksDone[t]||{}).filter(Boolean).length>=3},
@@ -3207,7 +3209,7 @@ function hashStr(s){ let h=2166136261; for(let i=0;i<s.length;i++){ h^=s.charCod
 /* ---------- Misiones y vida ---------- */
 /* ---------- Tu día (según tu rutina real) ---------- */
 const ROUTINE_STEPS = [
-  {id:'wake',     name:'Despertar a las 4:30',  short:'Despertar', hint:'Te levantas de la cama y te estiras'},
+  {id:'wake',     name:'Despertar a las 6:00',  short:'Despertar', hint:'Te levantas de la cama y te estiras'},
   {id:'weigh',    name:'Pesarte',               short:'Pesarte',   hint:'Te subes a la báscula del baño'},
   {id:'clothes',  name:'Ropa deportiva',        short:'Ropa',      hint:'Te cambias para salir'},
   {id:'cardioAM', name:'Caminar o correr',      short:'Correr',    hint:'Sales a la calle. Si grabas, puntos extra'},
@@ -3224,14 +3226,33 @@ function videoDone(d){ return !!((routineLog[d]||{}).video) || sessionsLog.some(
 function cardioMin(d){ return sessionsLog.filter(e=>e.date===d && ['run','caminar','cardio'].includes(e.act)).reduce((a,e)=>a+(+e.min||0),0) + runsLog.filter(r=>r.date===d && !r.ses).reduce((a,r)=>a+(+r.min||0),0); }
 function recordedDay(d){ return sessionsLog.some(e=>e.date===d && e.rec); }
 const EXTRA_MISSIONS = [{id:'read', name:'Leer 10 págs o 30 min'}, {id:'rel', name:'Priorizar a tu novia'}, {id:'calls', name:'3 llamadas de prospección (lun a vie)'}];
+
+/* ===== v10: pasos, día de emergencia y reto de 45 días ===== */
+let stepsLog = {}, emergLog = {}, albumLog = {}, clipPostLog = {}, dropLog = {};
+function stepsOn(d){ d=d||today(); return Math.max(Math.round(+(stepsLog[d]||0)), Math.round(kmOn(d)*1300)); }
+function askSteps(){ const t=today(); const v=prompt('¿Cuántos pasos llevas hoy? (ábrelos en la app Salud)', stepsLog[t]||''); const n=parseInt(String(v||'').replace(/\D/g,''))||0; if(!(n>0)) return; stepsLog=Object.assign({},stepsLog); stepsLog[t]=Math.min(60000,n); saveJSON('game10-steps', stepsLog); worldToast(wFmt(stepsOn(t))+' pasos', stepsOn(t)>=10000?'Meta del día cumplida':'Meta: 10,000'); if(typeof POCKET!=='undefined' && POCKET && pkTab==='hoy') setTimeout(()=>pocketTab('hoy'),200); }
+function emergOn(d){ return !!((emergLog||{})[d] && emergLog[d].on); }
+function emergWeek(){ const wk=mondayOf(today()); let n=0; for(let i=0;i<7;i++){ if(emergOn(addDaysStr(wk,i))) n++; } return n; }
+function setEmerg(on, reason){ const t=today(); emergLog=Object.assign({},emergLog); if(on) emergLog[t]={on:true, reason:reason||'', ts:Date.now()}; else delete emergLog[t]; saveJSON('game10-emerg', emergLog); scheduleGameCheck(); }
+const RETO = {start:'2026-11-16', end:'2026-12-31', name:'Reto 45 días'};
+function retoDay(d){ d=d||today(); if(d<RETO.start || d>RETO.end) return 0; return Math.round((gDay(d)-gDay(RETO.start))/86400000)+1; }
+function retoTotal(){ return Math.round((gDay(RETO.end)-gDay(RETO.start))/86400000)+1; }
+const RETO_PROGRAM = {1:{t:'A',n:'Pecho y hombros'}, 2:{t:'D',n:'Torso estético (martes de colegio: sin piernas)'}, 3:{t:'B',n:'Espalda y bíceps'}, 4:{t:'F',n:'Brazos y hombros (jueves de colegio)'}, 5:{t:'C',n:'Piernas'}, 6:{t:'E',n:'Cuerpo completo'}, 0:{t:'K',n:'Descanso activo: pasos largos y abdomen'}};
 function dayMissions(d){
+  if(emergOn(d)) return [
+    {id:'eweigh', name:'Pesarte', xp:'+15', done: weightLog.some(e=>e.date===d)},
+    {id:'cardio', name:'8,000 pasos (día especial)', xp:'+25', screen:'correr', done: stepsOn(d)>=8000, sub:`${wFmt(stepsOn(d))} / 8,000`},
+    {id:'enutri', name:'Comer lo mejor posible, sin azúcar', xp:'+25', done: badCount(d)===0 && (mealsOn(d)>0 || foodTot(d).kcal>0 || !!nutriDates[d])},
+    {id:'emove', name:'20 min de movimiento o entreno corto', xp:'+20', done: cardioMin(d)>=20 || gymSessions.some(e=>e.date===d) || !!(fitPeek(d)&&fitPeek(d).done)},
+    {id:'sleep', name:'Dormir 7h o más', xp:'+25', screen:'sueno', done: sleepLog.some(e=>e.date===d && e.hours>=SLEEP_GOAL)},
+  ];
   const wd=gDay(d).getUTCDay(), m=[], ex=(profile.extraMissions||[]);
   m.push({id:'morning', name:'Rutina de la mañana', xp:'+30', screen:'rutina', done: routineDone(d), sub:`${routineCount(d)}/${ROUTINE_STEPS.length} pasos`});
   m.push({id:'deep', name:'1 hora de Deep Work', xp:'+20', screen:'dinero', done: (dinero.deepworkLog[d]||0)>=1});
   m.push({id:'video', name:'Grabar o editar un video', xp:'+30', screen:'rutina', done: videoDone(d)});
   m.push({id:'fast', name:'Ayuno hasta las 12', xp:'+20', screen:'rutina', done: !!(fastLog[d] && fastLog[d].ok)});
   m.push({id:'gym', name:'Gym', xp:'+60', screen:'fisico', done: gymSessions.some(e=>e.date===d && (+e.hours||0)>=1)});
-  m.push({id:'cardio', name:'1 hora de cardio', xp:'+25', screen:'correr', done: cardioMin(d)>=60, sub:`${Math.round(cardioMin(d))}/60 min`});
+  m.push({id:'cardio', name:'10,000 pasos en el día', xp:'+25', screen:'correr', done: stepsOn(d)>=10000, sub:`${wFmt(stepsOn(d))} / 10,000 · los ves en la app Salud`});
   m.push({id:'nutri', name:'Cumplir tus macros', xp:'+30', screen:'nutricion', done: !!nutriDates[d]});
   m.push({id:'sleep', name:'Dormir 7h o más', xp:'+25', screen:'sueno', done: sleepLog.some(e=>e.date===d && e.hours>=SLEEP_GOAL)});
   if(ex.includes('read')) m.push({id:'read', name:'Leer 10 pág o 30 min', xp:'+25', screen:'lectura', done: dayMeetsReadGoal(d)});
@@ -3275,6 +3296,7 @@ function exclusivesOwned(chests){ const n=(chests||weeklyChests()).filter(c=>c.t
 
 /* ---------- Vida ---------- */
 function kmOn(d){ return runsLog.filter(r=>r.date===d).reduce((s,r)=>s+(+r.km||0),0); }
+function bestRunOn(d){ return runsLog.filter(r=>r.date===d).reduce((s,r)=>Math.max(s,+r.km||0),0); }
 function computeLife(chests){
   chests = chests || weeklyChests();
   const chestAt={}; chests.forEach(c=>{ if(c.hp) chestAt[addDaysStr(c.wk,7)]=c.hp; });
@@ -3282,7 +3304,7 @@ function computeLife(chests){
   const start=(hpStart && hpStart>gameStart) ? hpStart : (gameStart||t);
   for(let d=start; d<t; d=addDaysStr(d,1)){
     if(dead){
-      if(kmOn(d)>=10){ dead=false; hp=60; continue; }
+      if(bestRunOn(d)>=5){ dead=false; hp=60; continue; }
       deadDays.add(d); continue;
     }
     if(chestAt[d]) hp=Math.min(100, hp+chestAt[d]);
@@ -3290,7 +3312,7 @@ function computeLife(chests){
     if(hp<=0){ hp=0; dead=true; deathDate=d; deaths++; }
   }
   if(!dead && chestAt[t]) hp=Math.min(100, hp+chestAt[t]);
-  if(dead){ if(kmOn(t)>=10){ dead=false; hp=60; } else deadDays.add(t); }
+  if(dead){ if(bestRunOn(t)>=5){ dead=false; hp=60; } else deadDays.add(t); }
   return {hp, dead, deathDate, deadDays, deaths, todayRes:dayResult(t)};
 }
 
@@ -3376,7 +3398,7 @@ const ACTIVITIES = [
   {id:'calls',  name:'Llamadas de prospección', start:'Hacer llamadas',           goal:30,  focus:true, mission:'calls', place:'pace',   pose:'call',     log:'Cada llamada que marques se suma en Dinero'},
   {id:'gym',    name:'Gym y box',               start:'Entrenar',                 goal:120, focus:true, mission:'gym',   place:'gym',    pose:'gym',      log:'Se registra en Físico con las horas reales'},
   {id:'futbol', name:'Fútbol',                  start:'Jugar fútbol',             goal:90,  focus:true, mission:'train', place:'field',  pose:'juggle',   log:'Entreno o partido, con tus goles'},
-  {id:'run',    name:'Correr',                  start:'Salir a correr',           goal:45,  focus:true,                  place:'route',  pose:'run',      log:'Pones tus km al terminar (10 km te reviven)'},
+  {id:'run',    name:'Correr',                  start:'Salir a correr',           goal:45,  focus:true,                  place:'route',  pose:'run',      log:'Pones tus km al terminar (5 km sin parar te reviven)'},
   {id:'novia',  name:'Tiempo con ella',         start:'Tiempo con mi novia',      goal:30,  focus:false, mission:'rel', place:'read',   pose:'sitPhone', log:'Al terminar se marca que la priorizaste hoy'},
   {id:'caminar',name:'Caminar',                  start:'Salir a caminar',          goal:40,  focus:true,                   place:'route',  pose:'walk',     log:'Cuenta como cardio y como paso de tu rutina'},
   {id:'cardio', name:'Cardio',                   start:'Hacer cardio',             goal:60,  focus:true, mission:'cardio', place:'route', pose:'run',     log:'Se suma a tu hora de cardio del día'},
@@ -3522,7 +3544,7 @@ function cityProgress(L){
 function moveCheck(snap){
   const n=nextCity(); if(!n) return {ok:false, reason:'Ya vives en la ciudad de tus sueños'};
   const needLv=snap.L<n.lvl, needCoins=snap.coins<n.cost;
-  if(snap.life.dead) return {ok:false, n, reason:'Estás sin vida: corre 10 km para revivir'};
+  if(snap.life.dead) return {ok:false, n, reason:'Estás sin vida: corre 5 km sin parar para revivir'};
   if(needLv && needCoins) return {ok:false, n, reason:`Te falta nivel ${n.lvl} y ◎ ${wFmt(n.cost-snap.coins)}`};
   if(needLv) return {ok:false, n, reason:`Te falta llegar a nivel ${n.lvl}`};
   if(needCoins) return {ok:false, n, reason:`Te faltan ◎ ${wFmt(n.cost-snap.coins)} ($${wFmt((n.cost-snap.coins)*COIN_RATE)} registrados)`};
@@ -5158,7 +5180,7 @@ function initWorld(){
   setupSky();
   wireWorldControls(renderer.domElement); wireJoystick(); wireKeys();
   const on=(id,fn)=>{ const el=document.getElementById(id); if(el) el.addEventListener('click', fn); };
-  on('wDockHoy', ()=>openRutina()); on('wDockRetos', openRetos); on('wDockHacer', openActivities); on('wDockNeg', ()=>openNegocios()); on('wMotiv', ()=>openMotivame()); on('wLearn', openAprende); on('wNotes', openNotas); on('wRecBtn', ()=>openContenido()); on('wFit', ()=>openFisico()); on('wsPlan', ()=>openFisico('hoy'));
+  on('wDockHoy', ()=>openRutina()); on('wDockRetos', openRetos); on('wDockHacer', openActivities); on('wDockNeg', ()=>openNegocios()); on('wMotiv', ()=>openMotivame()); on('wLearn', openAprende); on('wNotes', openNotas); on('wRecBtn', ()=>openContenido()); on('wFit', ()=>openFisico()); on('wMoney', ()=>openDinero()); on('wAlbum', ()=>openAlbum()); on('wsPlan', ()=>openFisico('hoy'));
   on('wsPause', pauseSession); on('wsEnd', endSessionPrompt); on('wsSound', cycleSound); on('wsCount', countPlus); on('wsExit', ()=>showScreen('start')); on('wDockMundo', openGlobe); on('wDockTienda', openShop); on('wDockYo', ()=>openYo('perfil'));
   on('wFlash', openRetos); on('wCamBtn', toggleCam); on('wSheetClose', closeSheet); on('wGlobeBack', ()=>{ closeGlobe(); });
   on('wBriefClose', hideBriefing);
@@ -5345,8 +5367,8 @@ function refreshWorld(){
 function afterChange(){
   if(!W || !worldActive) return;
   const wasDead=W.dead, r=refreshWorld();
-  if(wasDead && !r.snap.life.dead){ showBanner('Reviviste', 'Vida 60', ['Corriste tus 10 km. Vuelve a ganarte todo.']); setPose(W.avatar,'celebrate',3); return; }
-  if(!wasDead && r.snap.life.dead){ showBanner('Te quedaste sin vida', 'Vida 0', ['Corre 10 km para revivir']); return; }
+  if(wasDead && !r.snap.life.dead){ showBanner('Reviviste', 'Vida 60', ['Corriste tus 5 km sin parar. Vuelve a ganarte todo.']); setPose(W.avatar,'celebrate',3); return; }
+  if(!wasDead && r.snap.life.dead){ showBanner('Te quedaste sin vida', 'Vida 0', ['Corre 5 km sin parar para revivir']); return; }
   if(r.levelUp){ showLevelBanner(r.snap.L, r.prevLevel); setPose(W.avatar,'celebrate',3); }
   r.newIds.forEach(id=>revealItem(id,false));
   if(W.briefOpen) showBriefing(r.snap);
@@ -5417,7 +5439,7 @@ function showBriefing(snap){
   const coach=`<div class="wb-coach">${coachLine(snap)}</div>`;
   const evRow= ev ? `<div class="wb-ev"><b>${ev.name}</b> · ${ev.line}</div>` : '';
   if(snap.life.dead){
-    el.innerHTML=`${head}<div class="wb-t">Corre 10 km para revivir</div>${coach}<div class="wb-act"><button class="wb-go" id="wbRun">Salir a correr</button><button class="wb-sec" id="wbLog">Ya corrí</button></div><button class="wb-x" id="wBriefClose" aria-label="Cerrar">×</button>`;
+    el.innerHTML=`${head}<div class="wb-t">Corre 5 km sin parar para revivir</div>${coach}<div class="wb-act"><button class="wb-go" id="wbRun">Salir a correr</button><button class="wb-sec" id="wbLog">Ya corrí</button></div><button class="wb-x" id="wBriefClose" aria-label="Cerrar">×</button>`;
     el.classList.add('show'); document.getElementById('wbRun').onclick=()=>startSession('run'); document.getElementById('wbLog').onclick=openRuns; document.getElementById('wBriefClose').onclick=hideBriefing; return;
   }
   if(!nm){
@@ -5538,7 +5560,7 @@ function openHoy(keep){
     const btn = x.done ? '' : act ? `<div class="w-2btn"><button class="w-go solid" data-act="${act}" aria-label="${ACT[act].start}">▶ Iniciar</button>${quick}</div>` : (qk.q ? `<button class="w-go solid" data-q="${qk.q}">${qk.label}</button>` : quick);
     return sheetRow({name:x.name, done:x.done, sub:`${x.xp} XP${f?` · <span class="w-x2">x2 antes de las ${hourLabel(f.f.until)}</span>`:''}`, btn}); }).join('');
   openSheet('Misiones de hoy', `
-    ${snap.life.dead?'<div class="w-note warn">Estás sin vida: corre 10 km para revivir. Lo que hagas hoy no da XP.</div>':''}
+    ${snap.life.dead?'<div class="w-note warn">Estás sin vida: corre 5 km sin parar para revivir. Lo que hagas hoy no da XP.</div>':''}
     <div class="w-stats"><div><b>${res.done}/${res.total}</b><span>Hoy</span></div><div><b>${snap.life.dead?0:snap.life.hp}</b><span>Vida</span></div><div><b>${snap.s.curStreak}</b><span>Racha</span></div><div><b class="${res.delta<0?'neg':''}">${res.delta>0?'+':''}${res.delta}</b><span>Vida al cierre</span></div></div>
     ${rows}
     <div class="w-note">Si terminas todas hoy: +120 XP y +10 de vida. Con menos de la mitad pierdes 15 de vida; en cero pierdes 25.</div>
@@ -5563,7 +5585,7 @@ function openRetos(keep){
   const ms=MILESTONES.map(x=>{ const done=s.milestones.includes(x.id); const btn = x.auto ? '' : `<button class="w-go ${done?'':'solid'}" data-ms="${x.id}">${done?'Deshacer':'Lo logré'}</button>`;
     return sheetRow({name:x.name, cat:x.cat, done, sub:`+${wFmt(x.xp)} XP${x.auto?' · se marca solo · '+(autoProgress[x.id]||''):''}`, btn}); }).join('');
   openSheet('Retos', `
-    ${snap.life.dead?'<div class="w-note warn">Estás sin vida: nada de esto da XP hasta que corras 10 km.</div>':''}
+    ${snap.life.dead?'<div class="w-note warn">Estás sin vida: nada de esto da XP hasta que corras tus 5 km.</div>':''}
     <div class="w-sec" style="margin-top:4px;">Retos relámpago de hoy</div>
     <div class="w-note">Cumple antes de la hora y cobras el doble o un bono. Se cobran solos en cuanto lo registras a tiempo.</div>${flashRows}
     <div class="w-sec">Cofre de la semana</div>
@@ -5572,7 +5594,7 @@ function openRetos(keep){
     <div class="w-note">${streak>1?`Llevas ${streak} semanas seguidas en Plata o más: tu próximo cofre vale x${(1+0.1*Math.min(streak,5)).toFixed(1)}.`:'Encadena semanas en Plata o más y cada cofre vale más (hasta x1.5).'} Oro y Diamante te dan ropa y joyas que no se venden en la tienda.</div>
     <div class="w-sec">Extras de hoy · ${TASKS_DAILY.filter(x=>td[x.id]).length}/${TASKS_DAILY.length}</div>${daily}
     <div class="w-sec">Retos de esta semana · ${TASKS_WEEKLY.filter(x=>wd[x.id]).length}/${TASKS_WEEKLY.length}</div>${weekly}
-    <div class="w-sec">Correr</div>${sheetRow({name:'Registrar una carrera', sub:'+15 XP por km. 10 km o más te revive si estás sin vida.', btn:'<button class="w-go solid" data-runs="1">Abrir</button>'})}
+    <div class="w-sec">Correr</div>${sheetRow({name:'Registrar una carrera', sub:'+15 XP por km. Una corrida de 5 km sin parar te revive si estás sin vida.', btn:'<button class="w-go solid" data-runs="1">Abrir</button>'})}
     <div class="w-sec">Hitos de tu vida · ${s.milestones.length}/${MILESTONES.length}</div>${ms}`, keep);
   const body=document.getElementById('wSheetBody');
   body.querySelectorAll('[data-screen]').forEach(b=>b.addEventListener('click', ()=>showScreen(b.dataset.screen)));
@@ -5590,7 +5612,7 @@ function openRuns(){
   const list=[...runsLog].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,12);
   const rows=list.length ? list.map(r=>sheetRow({name:`${r.km} km`, sub:`${fmtDate(r.date)}${r.min?` · ${r.min} min · ${(r.min/r.km).toFixed(1)} min/km`:''}`, btn:`<button class="w-go" data-delrun="${runsLog.indexOf(r)}">Borrar</button>`})).join('') : '<div class="w-note">Todavía no registras carreras.</div>';
   openSheet('Correr', `
-    ${snap.life.dead?`<div class="w-note warn">Estás sin vida desde el ${fmtDate(snap.life.deathDate)}. Registra una carrera de 10 km o más para revivir con 60 de vida.</div>`:''}
+    ${snap.life.dead?`<div class="w-note warn">Estás sin vida desde el ${fmtDate(snap.life.deathDate)}. Registra una corrida de 5 km sin parar para revivir con 60 de vida.</div>`:''}
     <div class="w-note">Cada km te da +15 XP (máximo 25 km por día). Esta semana llevas <b>${wFmt(wkKm)} km</b>.</div>
     <div class="w-form">
       <label>Kilómetros<input type="number" id="wRunKm" min="0.5" max="60" step="0.1" placeholder="10" inputmode="decimal"></label>
@@ -5723,7 +5745,7 @@ function doQuick(q, fromBrief){
   if(q==='rutina'){ openRutina(); return; }
   if(q==='fast'||q==='fastno'){ const d=new Date(), at=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); fastLog=Object.assign({},fastLog,{[t]:{ok:q==='fast' && nowHour()>=11.9, at}}); saveJSON('game6-fast', fastLog); msg = q==='fast' ? (nowHour()>=11.9?'Ayuno cumplido hasta las 12 · +20 XP':'Todavía no son las 12') : 'Ayuno roto: mañana otra vez'; if(q==='fast' && nowHour()<11.9){ delete fastLog[t]; saveJSON('game6-fast', fastLog); } renderFastPill(); }
   else if(q==='video'){ markRoutine('video'); msg='Video listo · +30 XP'; }
-  else if(q==='cardio'){ sessionsLog.push({act:'cardio', date:t, start:Date.now()-3600000, end:Date.now(), min:60, quick:true}); saveJSON('game5-sessions', sessionsLog); msg='1 hora de cardio · +25 XP'; }
+  else if(q==='cardio'){ const v=prompt('¿Cuántos pasos llevas hoy? (ábrelos en la app Salud)', stepsLog[t]||''); const n=parseInt(String(v||'').replace(/\D/g,''))||0; if(!(n>0)) return; stepsLog=Object.assign({},stepsLog); stepsLog[t]=Math.min(60000,n); saveJSON('game10-steps', stepsLog); msg=wFmt(stepsOn(t))+' pasos de 10,000'; }
   if(q==='run'){ if(currentScreen!=='world') showScreen('world'); setTimeout(openRuns, 150); return; }
   if(q==='call'){ adjustLog(dinero.callsLog,1); msg=`+1 llamada · llevas ${dinero.callsLog[t]} hoy`; saveJSON('dinero-data',dinero); }
   else if(q==='visit'){ adjustLog(dinero.visitsLog,1); msg='+1 visita · +30 XP'; saveJSON('dinero-data',dinero); }
@@ -5752,7 +5774,7 @@ function gameCheck(){
   }, 400+i*3400));
 }
 const _saveJSONBase = saveJSON;
-const GAME_DATA_KEYS = /^(dinero-data|reading-log|sleep-log|gym-sessions|training-log|relationship-data|nutri-dates|week-progress|football-log|lift-log|game3-tasks|game3-weekly|game3-milestones|game3-runs|game3-body|game5-prospects|game5-sessions|game6-routine|game6-fast|game6-weight|game6-notes|game7-content|game7-pipe|game8-fit)$/;
+const GAME_DATA_KEYS = /^(dinero-data|reading-log|sleep-log|gym-sessions|training-log|relationship-data|nutri-dates|week-progress|football-log|lift-log|game3-tasks|game3-weekly|game3-milestones|game3-runs|game3-body|game5-prospects|game5-sessions|game6-routine|game6-fast|game6-weight|game6-notes|game7-content|game7-pipe|game8-fit|game10-steps|game10-emerg|game10-album|game10-clip|game10-drop)$/;
 saveJSON = function(k, v){ const p=_saveJSONBase(k, v); if(GAME_DATA_KEYS.test(k)) scheduleGameCheck(); return p; };
 
 /* ---------- Pantalla de inicio ---------- */
@@ -6766,7 +6788,7 @@ function openRutina(keep){
   openSheet('Tu día', `
     <div class="w-stats"><div><b>${n}/${ROUTINE_STEPS.length}</b><span>Mañana</span></div><div><b>${fmtHours(dw)}</b><span>Deep Work</span></div><div><b>${cm}</b><span>Min cardio</span></div><div><b>${weightLog.length?weightLog[weightLog.length-1].kg:'—'}</b><span>Kg</span></div></div>
     <div class="w-note">${next?`Sigue: <b>${next.name}</b>. Le das ▶ y tu personaje lo hace contigo.`:'Rutina de la mañana completa. Ahora: 1 hora de Deep Work y tu video.'}</div>
-    <div class="w-sec" style="margin-top:4px;">Mañana · 4:30</div>${steps}
+    <div class="w-sec" style="margin-top:4px;">Mañana · 6:00</div>${steps}
     <div class="w-sec">Después</div>
     ${sheetRow({name:'1 hora de Deep Work', done:dw>=1, sub:`Llevas ${fmtHours(dw)}`, btn: dw>=1?'':'<button class="w-go solid" data-act="deep">▶</button>'})}
     ${sheetRow({name:'Grabar o editar un video', done:vd, sub:'Marca personal o Hashbula', btn: vd?'':'<div class="w-2btn"><button class="w-go solid" data-act="grabar">▶ Grabar</button><button class="w-go" data-act="editar">▶ Editar</button><button class="w-go" data-vq="1">Ya</button></div>'})}
@@ -6774,7 +6796,7 @@ function openRutina(keep){
     ${sheetRow({name:'Ayuno hasta las 12', done:!!(f&&f.ok), sub: h<12 ? `Faltan <b data-left="${Math.max(0,(12-h)*3600)}">${fmtLeft(Math.max(0,(12-h)*3600))}</b>` : 'Ya son las 12: puedes comer', btn:fastBtn})}
     <div class="w-sec">Tarde</div>
     ${sheetRow({name:'Gym', done:gym, sub:'Todos los días', btn: gym?'':'<button class="w-go solid" id="wRtFit">▶ Mi entreno</button>'})}
-    ${sheetRow({name:'1 hora de cardio', done:cm>=60, sub:`${cm}/60 min · caminar y correr también cuentan`, btn: cm>=60?'':'<button class="w-go solid" data-act="cardio">▶</button>'})}
+    ${sheetRow({name:'10,000 pasos en el día', done:stepsOn(t)>=10000, sub:`${wFmt(stepsOn(t))} / 10,000 · tus caminatas y corridas ya suman`, btn: stepsOn(t)>=10000?'':'<button class="w-go solid" id="wRtSteps">Poner pasos</button>'})}
     ${sheetRow({name:'Cumplir tus macros', done:!!nutriDates[t], sub:'Bajar grasa sin perder músculo', btn: '<button class="w-go" id="wRtFood">Mi comida</button>'})}
     <div class="w-note">Martes y jueves, aunque entrenes en el colegio, cuentan igual que cualquier día.</div>
     <button class="w-go wide" id="wRtHoy">Ver misiones, vida y retos</button>`, keep);
@@ -6833,7 +6855,7 @@ const STOIC = [
 const MOTIV = [
   {t:'Nadie viene a salvarte', m:'Y es la mejor noticia: todo lo que construyas va a ser tuyo. Vantia, tu cuerpo, Londres. Nada de eso llega esperando ganas; llega empezando sin ellas.', a:'Pon 10 minutos de Deep Work. Solo 10.', act:'deep'},
   {t:'Las ganas llegan después', m:'La motivación no va antes de la acción, va después. Los primeros 5 minutos siempre se sienten pesados; al minuto 6 ya eres otro.', a:'Empieza lo más chico de tu siguiente misión.', act:'next'},
-  {t:'Tu yo de 4:30', m:'Hay un Iker que se levanta a las 4:30, se pesa, sale a la calle cuando todos duermen y graba para que se vea. Ese no es otro: eres tú cuando decides.', a:'Sal a caminar 10 minutos y grábalo.', act:'caminar'},
+  {t:'Tu yo de las 6', m:'Hay un Iker que se levanta a las 6, se pesa, sale a la calle cuando todos duermen y graba para que se vea. Ese no es otro: eres tú cuando decides.', a:'Sal a caminar 10 minutos y grábalo.', act:'caminar'},
   {t:'Un día no es tu vida', m:'Si hoy vas mal, no tires el día completo. Una misión cumplida cambia el cierre del día y tu vida en el juego. No pierdas 25 por no hacer 1.', a:'Haz la misión más fácil que te falta.', act:'next'},
   {t:'Nadie ve el proceso', m:'Todos quieren el resultado de alguien disciplinado; casi nadie aguanta el proceso aburrido. Tu ventaja es aguantar lo aburrido más que los demás.', a:'25 minutos de enfoque sin celular.', act:'deep'},
   {t:'$50,000 son llamadas', m:'El dinero que quieres está del otro lado de conversaciones que hoy te da flojera tener. Cada llamada es un ladrillo.', a:'Haz 3 llamadas de prospección ahora.', act:'calls'},
@@ -6850,7 +6872,7 @@ async function openMotivame(forceOffline){
   if(S){
     try{
       const ctx=lifeContext();
-      d = await S.json(`Eres el coach dentro de "El juego de la vida", el juego de hábitos de Iker Cordova (17 años, Tepic, Nayarit). Tiene su agencia Vantia (páginas web e IA para negocios locales). Sus metas: ganar $50,000 al mes, bajar grasa sin perder músculo, levantarse a las 4:30 con disciplina y hacer contenido para su marca personal, y llegar a vivir en Londres.
+      d = await S.json(`Eres el coach dentro de "El juego de la vida", el juego de hábitos de Iker Cordova (17 años, Tepic, Nayarit). Tiene su agencia Vantia (páginas web e IA para negocios locales). Sus metas: ganar $50,000 al mes, bajar grasa sin perder músculo, levantarse a las 6 con disciplina y hacer contenido para su marca personal, y llegar a vivir en Londres.
 Hoy: ${JSON.stringify(ctx)}.
 Está desmotivado y apretó el botón "Motívame". Escríbele algo que de verdad lo mueva, usando su situación real de hoy. Español de México, directo, sin cursilerías, sin emojis.
 Responde solo JSON con esta forma: {"titulo":"máximo 6 palabras","mensaje":"3 o 4 frases","accion":"una acción concreta de 2 a 10 minutos que pueda hacer ya","act":"deep|read|gym|cardio|grabar|caminar|medit|plan|calls|none","frase":"una frase corta de un filósofo estoico","autor":"Marco Aurelio, Séneca o Epicteto"}`, {modelTier:'quick', cache:false});
@@ -6875,10 +6897,10 @@ Responde solo JSON con esta forma: {"titulo":"máximo 6 palabras","mensaje":"3 o
 const LESSONS = {
   estoicismo:{titulo:'Estoicismo: controla lo que sí depende de ti', idea:'Los estoicos separaban todo en dos: lo que depende de ti (tus juicios, tus decisiones, tu esfuerzo) y lo que no (lo que opinan otros, el clima, los resultados). Tu energía va solo a lo primero.', claves:[['Dicotomía del control','Antes de preocuparte, pregúntate: ¿esto depende de mí? Si no, suéltalo. Si sí, actúa.'],['Premeditación de males','Imagina lo que puede salir mal para no asustarte cuando pase y tener un plan.'],['Amor al destino','Usa lo que te pasa como material para entrenar tu carácter.']], ejercicio:'Escribe 3 cosas que te preocupan hoy y marca cuáles dependen de ti. Actúa en una.', pregunta:{q:'Un cliente no te contesta. Según los estoicos, ¿qué depende de ti?', opciones:['Que te conteste','Tu seguimiento y tu siguiente llamada','Su estado de ánimo'], correcta:1, porque:'Su respuesta no depende de ti; tu seguimiento sí.'}},
   inteligencia:{titulo:'Cómo aprender más rápido (inteligencia práctica)', idea:'La inteligencia que más paga no es saber mucho, es aprender rápido y usarlo. Se entrena con recuperación activa, repetición espaciada y explicar con tus palabras.', claves:[['Recuperación activa','Cierra el libro y trata de recordar. Recordar entrena más que releer.'],['Técnica Feynman','Explica el tema como si fuera para un niño de 12. Donde te trabas, ahí no entiendes.'],['Repetición espaciada','Repasa a los 1, 3 y 7 días. Así se queda en la memoria larga.']], ejercicio:'Explica en voz alta en 1 minuto lo último que aprendiste. Graba la nota con Notas.', pregunta:{q:'¿Qué ayuda más a recordar algo?', opciones:['Releerlo 5 veces','Tratar de recordarlo sin ver','Subrayarlo todo'], correcta:1, porque:'Recuperar la información la fija más que exponerte a ella.'}},
-  disciplina:{titulo:'Disciplina: que no dependa de las ganas', idea:'La disciplina es hacer lo que dijiste que harías cuando ya no tienes ganas. No se trata de fuerza de voluntad infinita, sino de sistemas que la necesiten poco.', claves:[['Decide antes','Las decisiones de la noche anterior ganan: ropa lista, alarma lejos, plan escrito.'],['Regla de 2 minutos','Empieza con una versión de 2 minutos. Empezar es lo difícil.'],['Nunca dos veces','Fallar un día pasa; fallar dos seguidos es el inicio de un hábito nuevo.']], ejercicio:'Deja lista hoy tu ropa deportiva y tu báscula para mañana a las 4:30.', pregunta:{q:'Fallaste tu rutina hoy. ¿Qué dice la regla?', opciones:['Ya se arruinó la semana','Mañana no falles','Empieza el lunes'], correcta:1, porque:'Lo que rompe los hábitos es fallar dos veces seguidas.'}},
+  disciplina:{titulo:'Disciplina: que no dependa de las ganas', idea:'La disciplina es hacer lo que dijiste que harías cuando ya no tienes ganas. No se trata de fuerza de voluntad infinita, sino de sistemas que la necesiten poco.', claves:[['Decide antes','Las decisiones de la noche anterior ganan: ropa lista, alarma lejos, plan escrito.'],['Regla de 2 minutos','Empieza con una versión de 2 minutos. Empezar es lo difícil.'],['Nunca dos veces','Fallar un día pasa; fallar dos seguidos es el inicio de un hábito nuevo.']], ejercicio:'Deja lista hoy tu ropa deportiva y tu báscula para mañana a las 6:00.', pregunta:{q:'Fallaste tu rutina hoy. ¿Qué dice la regla?', opciones:['Ya se arruinó la semana','Mañana no falles','Empieza el lunes'], correcta:1, porque:'Lo que rompe los hábitos es fallar dos veces seguidas.'}},
   ventas:{titulo:'Ventas: vende el problema resuelto', idea:'Nadie compra una página web; compran más clientes, más citas, menos tiempo perdido. Tu trabajo es entender su problema mejor que ellos.', claves:[['Pregunta antes de ofrecer','¿Cómo te llegan hoy los clientes? ¿Qué pasa cuando no contestas WhatsApp?'],['Habla en resultados','En vez de "SEO", di "que te encuentren en Google cuando busquen dentista en Tepic".'],['Cierra con fecha','Termina con un siguiente paso concreto: "¿Te enseño la demo el jueves a las 5?"']], ejercicio:'Escribe 3 preguntas para tu próxima llamada que descubran el problema del negocio.', pregunta:{q:'¿Qué es mejor decirle a un consultorio?', opciones:['Te hago una web con SEO','Que los pacientes te agenden solos por WhatsApp','Tengo buenos precios'], correcta:1, porque:'Habla del resultado que le importa, no de la herramienta.'}},
   dinero:{titulo:'Dinero: gana, guarda, invierte', idea:'El dinero se mueve por tres palancas: cuánto ganas (lo más importante a tu edad), cuánto guardas y cómo lo haces crecer. Primero sube tus ingresos.', claves:[['Págate primero','En cuanto cobres, aparta un porcentaje fijo antes de gastar.'],['Ingresos recurrentes','Una mensualidad de $1,500 vale más que un pago único de $5,000 en un año.'],['Interés compuesto','Lo que inviertes joven tiene más años para multiplicarse. Tu 65/35 es el plan.']], ejercicio:'Calcula cuántos clientes con mensualidad necesitas para $50,000 al mes.', pregunta:{q:'¿Qué da más estabilidad a Vantia?', opciones:['Solo pagos únicos','Mensualidades de mantenimiento y bots','Descuentos grandes'], correcta:1, porque:'Lo recurrente se suma mes con mes.'}},
-  mindset:{titulo:'Mindset: identidad antes que metas', idea:'Los cambios duran cuando cambias quién crees que eres. No "quiero levantarme temprano", sino "soy alguien que se levanta a las 4:30".', claves:[['Voto por tu identidad','Cada acción es un voto por la persona que quieres ser.'],['Mentalidad de crecimiento','Si todavía no te sale, es "todavía". Se entrena.'],['Compárate con tu ayer','Tu única competencia es el Iker de ayer.']], ejercicio:'Escribe en Notas 3 frases: "Soy alguien que…".', pregunta:{q:'¿Qué hace que un hábito dure?', opciones:['Una meta grande','Que sea parte de quién eres','Motivación diaria'], correcta:1, porque:'La identidad sostiene la conducta cuando la motivación baja.'}},
+  mindset:{titulo:'Mindset: identidad antes que metas', idea:'Los cambios duran cuando cambias quién crees que eres. No "quiero levantarme temprano", sino "soy alguien que se levanta a las 6".', claves:[['Voto por tu identidad','Cada acción es un voto por la persona que quieres ser.'],['Mentalidad de crecimiento','Si todavía no te sale, es "todavía". Se entrena.'],['Compárate con tu ayer','Tu única competencia es el Iker de ayer.']], ejercicio:'Escribe en Notas 3 frases: "Soy alguien que…".', pregunta:{q:'¿Qué hace que un hábito dure?', opciones:['Una meta grande','Que sea parte de quién eres','Motivación diaria'], correcta:1, porque:'La identidad sostiene la conducta cuando la motivación baja.'}},
   salud:{titulo:'Bajar grasa sin perder músculo', idea:'Para bajar grasa necesitas comer un poco menos de lo que gastas; para no perder músculo necesitas proteína alta, entrenar pesado y dormir bien.', claves:[['Proteína en cada comida','Cerca de 2 g por kilo de peso al día protege tu músculo.'],['Entrena pesado','El gym le dice a tu cuerpo que el músculo se necesita; el cardio ayuda a gastar.'],['Duerme 7 h','Dormir poco sube el hambre y baja la recuperación.']], ejercicio:'Revisa que tu primera comida después del ayuno tenga una buena porción de proteína.', pregunta:{q:'¿Qué protege más tu músculo en déficit?', opciones:['Solo cardio','Proteína alta y pesas','Comer muy poco'], correcta:1, porque:'Proteína y entrenamiento de fuerza mandan la señal de conservar músculo.'}},
   comunicacion:{titulo:'Comunicación: que te entiendan y te recuerden', idea:'Comunicar bien es decir menos, más claro y con una historia. La gente recuerda historias y ejemplos, no listas.', claves:[['Una idea por mensaje','Si tienes que explicar tres cosas, haz tres mensajes o tres partes.'],['Historia corta','Situación, problema, cómo se resolvió. En 30 segundos.'],['Escucha activa','Repite con tus palabras lo que te dijeron antes de responder.']], ejercicio:'Graba un video de 30 segundos contando cómo ayudaste a un cliente.', pregunta:{q:'¿Qué recuerda más la gente?', opciones:['Datos','Una historia con un ejemplo','Palabras técnicas'], correcta:1, porque:'Las historias se recuerdan mucho más que los datos sueltos.'}},
   habitos:{titulo:'Hábitos: señal, rutina, recompensa', idea:'Todo hábito tiene una señal que lo dispara, la rutina y una recompensa. Si diseñas bien las tres, el hábito se hace casi solo.', claves:[['Hazlo obvio','La báscula en el piso del baño, la ropa lista a la vista.'],['Hazlo fácil','Reduce los pasos para empezar.'],['Hazlo satisfactorio','Marca cada paso en el juego: ver avanzar también es recompensa.']], ejercicio:'Elige un hábito de tu rutina y ponle una señal física para mañana.', pregunta:{q:'¿Qué ayuda más a pesarte diario?', opciones:['Acordarte','Tener la báscula a la vista al levantarte','Pesarte solo los lunes'], correcta:1, porque:'Una señal visible dispara el hábito sin depender de la memoria.'}},
@@ -7451,7 +7473,7 @@ const CT_PLATS = {tiktok:'TikTok', ig:'Instagram', yt:'YouTube'};
 const CT_STAGES = [{id:'idea', name:'Idea'}, {id:'grabado', name:'Grabado'}, {id:'editado', name:'Editado'}, {id:'publicado', name:'Publicado'}];
 const CLIP_GOAL = 4;
 const CLIPS = [
-  {id:'c430',   name:'Las 4:30: suena la alarma y te levantas', hint:'5 a 8 segundos. Que se vea la hora.', brand:'marca', at:'bed', until:6.5},
+  {id:'c430',   name:'Las 6:00: suena la alarma y te levantas', hint:'5 a 8 segundos. Que se vea la hora.', brand:'marca', at:'bed', until:8},
   {id:'cpeso',  name:'Tu peso de hoy', hint:'La báscula en primer plano. Progreso real, sin filtro.', brand:'marca', at:'scale', until:9},
   {id:'ccardio',name:'Caminata o corrida de madrugada', hint:'Un plano de frente y uno en primera persona. Cuenta sola si la grabas en tu rutina.', brand:'marca', at:'run', until:9},
   {id:'cskin',  name:'Skincare en 20 segundos', hint:'Frente al espejo, paso por paso.', brand:'marca', at:'mirror', until:10},
@@ -7585,11 +7607,11 @@ function openContenido(keep){
    - Registras series y pesos; la siguiente vez te sube el peso solo.
    - Peso diario con tendencia y ritmo sano.
    - Plan de comida con tus macros. Cada bebida con azúcar o postre
-     tiene castigo: vida, multa para tu meta de $100k y tu racha.
+     tiene castigo: vida, multa para tu meta de $50k y tu racha.
    - Cuentas regresivas: tus 18 (19 dic) con $100,000 y el Interprepas.
 ===================================================================== */
 let fitData = {cfg:{}, days:{}, balance:[], fines:[]};
-const FIT_CFG0 = {turns18:'', money:100000, inter:'2026-11-02', goalKg:82, fine:50, startKg:null};
+const FIT_CFG0 = {turns18:'', money:50000, inter:'', goalKg:84, fine:50, startKg:null};
 function fitCfg(){ return Object.assign({}, FIT_CFG0, fitData.cfg||{}); }
 function fitSave(){ saveJSON('game8-fit', fitData); }
 function fitDay(d){ d=d||today(); fitData.days=fitData.days||{}; if(!fitData.days[d]) fitData.days[d]={}; return fitData.days[d]; }
@@ -7707,8 +7729,8 @@ function designWorkout(a){
   let type;
   if(a.where==='no') type='K';
   else if(a.want && a.want!=='auto') type=a.want;
-  else { const last=lastPlanType(); type=last?FIT_ROT[(FIT_ROT.indexOf(last)+1)%FIT_ROT.length]:'A'; }
-  const notes=[];
+  else { const pr0=RETO_PROGRAM[gDay(today()).getUTCDay()]; type=(pr0&&pr0.t)||(lastPlanType()?FIT_ROT[(FIT_ROT.indexOf(lastPlanType())+1)%FIT_ROT.length]:'A'); }
+  const notes=[]; { const pr0=RETO_PROGRAM[gDay(today()).getUTCDay()]; if(a.want==='auto' && a.where!=='no' && pr0 && pr0.t===type && pr0.t!=='K') notes.push('Tu plan del reto marca hoy: '+pr0.n+'.'); }
   if(type!=='K' && FIT_DAYS[type].legs && a.other!=='nada' && a.want==='auto'){ type='D'; notes.push(`Hoy ya mueves las piernas en ${a.other==='futbol'?'el fútbol':'el colegio'}, así que te toca torso.`); }
   const T=FIT_DAYS[type], blk=fitBlock(), min=+a.time||60, mode=type==='K'?'hiper':a.mode;
   let picks=[]; T.slots.forEach((alts,si)=>{ const id=slotPick(alts, a, blk+si); if(id && !picks.some(p=>p.id===id)) picks.push({id, slot:si}); });
@@ -7724,8 +7746,8 @@ function designWorkout(a){
   const cm=Math.round(cardioMin(today())), left=Math.max(0,60-cm);
   let cardio, cardioMinPlan=0;
   if(mode==='combo'){ cardioMinPlan=comboCardio; cardio = a.where==='gym' ? `${cardioMinPlan} min al terminar: 10 min de intervalos en bici (30 s fuerte / 60 s suave) y el resto caminata inclinada (10–12 %, 5.5 km/h).` : `${cardioMinPlan} min al terminar: intervalos de 30 s rápido / 60 s suave caminando o en bici.`; }
-  else if(mode==='circuito'){ cardioMinPlan=ex.length*sets0(ex); cardio=`Entre cada ejercicio: 1 min de cardio (bici, escaladora, remo o saltar la cuerda). ${sets0(ex)} vueltas, 2 min de descanso entre vueltas.${left-cardioMinPlan>0?` Después ${Math.max(0,left-cardioMinPlan)} min de caminata para tu hora.`:''}`; }
-  else cardio = left<=0 ? 'Ya cumpliste tu hora de cardio hoy.' : a.where==='gym' ? `${left} min de caminata inclinada al terminar (10–12 %, 5–5.5 km/h). Quema grasa sin cansar tus piernas.` : `${left} min de caminata rápida o bici. Cuenta tu caminata de la mañana.`;
+  else if(mode==='circuito'){ cardioMinPlan=ex.length*sets0(ex); cardio=`Entre cada ejercicio: 1 min de cardio (bici, escaladora, remo o saltar la cuerda). ${sets0(ex)} vueltas, 2 min de descanso entre vueltas. Esto también suma pasos.`; }
+  else { const sLeft=Math.max(0,10000-stepsOn(today())), mins=Math.max(10,Math.round(sLeft/120/5)*5); cardio = sLeft<=0 ? 'Ya hiciste tus 10,000 pasos de hoy.' : a.where==='gym' ? `Te faltan ${wFmt(sLeft)} pasos: ≈ ${mins} min de caminata inclinada al terminar (10–12 %, 5–5.5 km/h).` : `Te faltan ${wFmt(sLeft)} pasos: ≈ ${mins} min de caminata a buen paso.`; }
   if(mode==='hiper') notes.push('Hipertrofia: baja cada repetición en 2–3 segundos, sube con fuerza. Cuando llegues al tope del rango en todas las series, sube el peso.');
   if(mode==='combo') notes.push('Pesas primero (para crecer) y el cardio al final, así no le quitas fuerza a tus series.');
   if(mode==='circuito') notes.push('Circuito: haz los ejercicios seguidos con 1 min de cardio entre cada uno. Quemas más y mantienes el músculo. Usa pesos moderados.');
@@ -7749,7 +7771,7 @@ async function designWithClaude(a, base){
   const s=await claudeSample(); if(!s || !s.json) return null;
   const hist=Object.keys(fitData.days||{}).sort().slice(-7).map(d=>{ const D=fitData.days[d]; return D.plan?`${d}: ${D.plan.name}${D.done?' (completo)':''}`:null; }).filter(Boolean);
   const w=weightLog.length?weightLog[weightLog.length-1].kg:(bodyInfo.weight||91);
-  const prompt=`Eres el entrenador personal de Iker (1.80 m, ${w} kg). Su meta: físico estético tipo Mark Wahlberg en los 90 (hombros anchos, espalda en V, brazos marcados, abdomen visible), bajar grasa sin perder músculo. Entrena gym diario y hace 1 h de cardio. Es menor de edad: nada extremo, técnica primero.
+  const prompt=`Eres el entrenador personal de Iker (1.80 m, ${w} kg). Su meta: físico estético tipo Mark Wahlberg en los 90 (hombros anchos, espalda en V, brazos marcados, abdomen visible), bajar grasa sin perder músculo. Entrena gym 5–6 días por semana y camina 10,000 pasos diarios. Según sus fotos: buena base de hombros y brazos; lo que más le estorba es la grasa del torso y la cara. Prioridades: perder grasa, deltoide lateral y espalda ancha (la V), pecho superior. Es menor de edad: nada extremo, técnica primero.
 Enfoque: hipertrofia (crecer músculo) con progresión doble, 10–20 series por músculo a la semana. Tipo de sesión de hoy: ${a.mode==='combo'?'pesas + cardio al final':a.mode==='circuito'?'circuito de pesas con cardio entre ejercicios':'pesas para crecer'}.
 Hoy respondió: lugar=${a.where}, tiempo=${a.time} min, otra actividad=${a.other}, energía=${a.energy}, molestia=${a.pain}, quiere=${a.want}.
 Últimos entrenos: ${hist.join('; ')||'ninguno'}.
@@ -7817,7 +7839,7 @@ function logBad(kind){
   fitData.fines=fitData.fines||[]; fitData.fines.push({date:t, amount:c.fine, why:BAD[kind].name, paid:false});
   fitSave(); fitSyncNutri(t);
   if(W && W.avatar && currentScreen==='world') setPose(W.avatar,'shame',4);
-  showBanner('Castigo', BAD[kind].name, [`−${FIT_PEN} de vida · tu misión de macros de hoy se pierde`, `Multa: $${wFmt(c.fine)} que apartas para tu meta de $100,000`, 'Tu racha sin azúcar vuelve a 0. Repárala y recuperas 3 de vida.']);
+  showBanner('Castigo', BAD[kind].name, [`−${FIT_PEN} de vida · tu misión de macros de hoy se pierde`, `Multa: $${wFmt(c.fine)} que apartas para tu meta de $50,000`, 'Tu racha sin azúcar vuelve a 0. Repárala y recuperas 3 de vida.']);
   scheduleGameCheck();
 }
 function repairBad(){ const D=fitDay(); const b=(D.bad||[]).find(x=>!x.fixed); if(!b) return; b.fixed=true; fitSave(); worldToast('Reparado · +3 de vida', 'Siguiente comida en plan y 1 L de agua'); scheduleGameCheck(); }
@@ -7825,7 +7847,7 @@ function repairBad(){ const D=fitDay(); const b=(D.bad||[]).find(x=>!x.fixed); i
 /* vida, XP y misiones */
 (function(){
   const _dr=dayResult; dayResult=function(d){ const r=_dr(d), p=foodPen(d); if(p){ r.delta-=p; r.pen=p; } return r; };
-  const _cl=computeLife; computeLife=function(ch){ const r=_cl(ch); if(!r.dead){ const p=foodPen(today()); if(p){ r.hp=Math.max(0, r.hp-p); if(r.hp<=0 && kmOn(today())<10){ r.dead=true; r.deathDate=today(); r.deadDays.add(today()); } } } return r; };
+  const _cl=computeLife; computeLife=function(ch){ const r=_cl(ch); if(!r.dead){ const p=foodPen(today()); if(p){ r.hp=Math.max(0, r.hp-p); if(r.hp<=0 && bestRunOn(today())<5){ r.dead=true; r.deathDate=today(); r.deadDays.add(today()); } } } return r; };
   const _xp=gameXP; gameXP=function(s){ const r=_xp(s); let v=0; const t=today();
     Object.keys(fitData.days||{}).forEach(d=>{ if(!gameStart || d<gameStart || d>t) return; const D=fitData.days[d]; if(D.ans) v+=5; if(D.done) v+=30; v+=mealsOn(d)*5; v-=badCount(d)*15; if(mealsOn(d)>=2 && !badCount(d)) v+=10; });
     r.parts['Físico y comida']=v; r.total+=v; return r; };
@@ -7836,14 +7858,14 @@ function repairBad(){ const D=fitDay(); const b=(D.bad||[]).find(x=>!x.fixed); i
 /* ---------- Metas: tus 18, $100k e Interprepas ---------- */
 function moneyNow(){ const b=(fitData.balance||[]).slice().sort((x,y)=>x.date.localeCompare(y.date)), last=b[b.length-1]; const since=last?last.date:'0000'; const inc=(dinero.incomeLog||[]).filter(e=>e.date>since).reduce((s,e)=>s+(+e.amount||0),0); return {base:last?last.amount:0, date:last?last.date:null, inc, est:(last?last.amount:0)+inc}; }
 function goalsInfo(){
-  const c=fitCfg(), m=moneyNow(), d18=c.turns18?daysUntil(c.turns18):-1, di=daysUntil(c.inter), left=Math.max(0,c.money-m.est);
+  const c=fitCfg(), m=moneyNow(), d18=daysUntil(c.turns18||'2026-12-19'), di=daysUntil(c.inter), left=Math.max(0,c.money-m.est);
   const w=weightLog.length?weightLog[weightLog.length-1].kg:null, wr=weightRate();
   return {c, m, d18, di, left, perDay:d18>0?left/d18:left, perWeek:d18>0?left/d18*7:left, w, wr, projInter: (w!=null && wr && di>0) ? w+wr.perWeek*di/7 : null};
 }
-function goalsLine(){ const g=goalsInfo(); if(g.d18<0) return ''; return `Faltan ${g.d18} días para tus 18. Llevas $${wFmt(g.m.est)} de $${wFmt(g.c.money)}: te faltan $${wFmt(g.left)} ($${wFmt(g.perDay)} por día).${g.di>0?` Interprepas en ${g.di} días.`:''}`; }
+function goalsLine(){ const g=goalsInfo(); if(g.d18<0) return ''; return `Faltan ${g.d18} días para el 19 de diciembre (tus 18). Llevas $${wFmt(g.m.est)} de $${wFmt(g.c.money)}: te faltan $${wFmt(g.left)} ($${wFmt(g.perDay)} por día).${g.di>0?` Interprepas en ${g.di} días.`:''}`; }
 function renderGoalPill(){
   const el=document.getElementById('wGoal'); if(!el) return; const g=goalsInfo(); if(g.d18<0){ el.style.display='none'; return; }
-  el.style.display='flex'; el.innerHTML=`<span>18 en <b>${g.d18} d</b></span><i></i><span><b>$${wFmt(g.m.est/1000)}k</b>/100k</span>${g.di>0?`<i></i><span>Interprepas <b>${g.di} d</b></span>`:''}`;
+  el.style.display='flex'; el.innerHTML=`<span>19 dic en <b>${g.d18} d</b></span><i></i><span><b>$${wFmt(g.m.est/1000)}k</b>/50k</span>${retoDay(today())?`<i></i><span>Reto <b>día ${retoDay(today())}/${retoTotal()}</b></span>`:''}`;
   el.onclick=()=>openFisico('metas');
 }
 function weightRate(){
@@ -7866,7 +7888,7 @@ function openFisico(tab, keep){
 function fitNeedsAsk(){ const D=fitPeek(today()); return !(D && D.ans); }
 function fitAskHTML(){
   const a=Object.assign(fitDefaults(), (fitPeek(today())||{}).ans||{});
-  return `<div class="ft-hero"><div class="ft-k">${dateLabel().toUpperCase()}</div><div class="ft-t">¿Qué vas a hacer hoy?</div><div class="ft-s">Con esto tu personaje diseña tu entreno de hoy: según lo que entrenaste antes, cómo te sientes y tu meta.</div></div>
+  return `<div class="ft-hero"><div class="ft-k">${dateLabel().toUpperCase()}</div><div class="ft-t">¿Qué vas a hacer hoy?</div><div class="ft-s">Con esto se diseña tu entreno de hoy según tu plan del reto, lo que entrenaste antes y cómo te sientes.${(RETO_PROGRAM[gDay(today()).getUTCDay()]||{}).n?` Hoy toca: <b style="color:#f1d99a">${RETO_PROGRAM[gDay(today()).getUTCDay()].n}</b>.`:''}</div></div>
     ${FIT_Q.map(q=>`<div class="w-sec" style="margin-top:14px;">${q.q}</div><div class="w-chips" data-q="${q.k}">${q.o.map(([v,n])=>`<button type="button" class="w-chip ${a[q.k]===v?'on':''}" data-v="${v}">${n}</button>`).join('')}</div>`).join('')}
     <button class="w-go solid wide" id="ftDesign">Diseñar mi entreno</button>`;
 }
@@ -7896,7 +7918,7 @@ function fitPlanHTML(D){
     ${P.type!=='K'?`<div class="w-form two" style="margin:8px 0 4px;"><button class="w-go ${inGym?'':'solid'}" id="ftStart">${inGym?'Entrenando…':(typeof POCKET!=='undefined'&&POCKET)?'▶ Empezar cronómetro del gym':'▶ Empezar: tu personaje entrena contigo'}</button><button class="w-go" id="ftClaude" style="display:none">Que Claude lo ajuste</button></div>`:''}
     ${cards}
     ${volHTML}
-    <div class="ex-card cardio"><div class="ex-n">Cardio</div><div class="ex-tip">${esc(P.cardio)}</div>${Math.round(cardioMin(today()))<60?`<button class="w-go solid" id="ftCardio" style="margin-top:8px;">▶ ${(typeof POCKET!=='undefined'&&POCKET)?'Empezar cardio':'Cardio con tu personaje'}</button>`:''}</div>
+    <div class="ex-card cardio"><div class="ex-n">Pasos del día · ${wFmt(stepsOn(today()))} / 10,000</div><div class="ex-tip">${esc(P.cardio)}</div>${stepsOn(today())<10000?`<button class="w-go solid" id="ftCardio" style="margin-top:8px;">▶ ${(typeof POCKET!=='undefined'&&POCKET)?'Empezar cardio':'Cardio con tu personaje'}</button>`:''}</div>
     <div class="w-form two" style="margin-top:12px;"><button class="w-go" id="ftRedo">Cambiar mis respuestas</button><button class="w-go" id="ftDone">${D.done?'Entreno completo ✓':'Terminé el entreno'}</button></div>`;
 }
 function bindPlan(){
@@ -7908,7 +7930,7 @@ function bindPlan(){
     worldToast(`Serie ${n}/${e.sets} · ${exName(e)}`, `${w?w+' kg × ':''}${r} reps · descansa ${e.rest} s`); }));
   document.querySelectorAll('[data-swap]').forEach(b=>b.addEventListener('click',()=>swapExercise(+b.dataset.swap)));
   if($('ftStart')) $('ftStart').onclick=()=>{ if(activeSession && activeSession.act==='gym'){ closeSheet(); return; } closeSheet(); startSession('gym'); };
-  if($('ftCardio')) $('ftCardio').onclick=()=>{ closeSheet(); startSession('cardio'); };
+  if($('ftCardio')) $('ftCardio').onclick=()=>{ closeSheet(); startSession('caminar'); };
   $('ftRedo').onclick=()=>{ const D2=fitDay(); D2.plan=null; fitSave(); openFisico('hoy'); };
   $('ftDone').onclick=()=>{ if(D.done) return; if(!confirm('¿Terminaste tu entreno de hoy?')) return; fitFinish(); };
   claudeSample().then(s=>{ const b=$('ftClaude'); if(s && b){ b.style.display=''; b.onclick=async()=>{ b.disabled=true; b.textContent='Claude está diseñando…'; const r=await designWithClaude(D.ans||fitDefaults(), P); if(r){ D.plan=r; D.sets={}; fitSave(); openFisico('hoy'); worldToast('Entreno ajustado con Claude', r.name); } else { b.disabled=false; b.textContent='No se pudo, intenta otra vez'; } }; } });
@@ -7970,7 +7992,7 @@ function fitComidaHTML(){
     ${MEALS.map(m=>{ const ok=D.meals&&D.meals[m.id]; return `<div class="fd-meal ${ok?'ok':''}"><div class="fd-at">${m.at}</div><div class="fd-b"><div class="ex-n">${m.name}</div><div class="ex-tip">${esc(m.opts[day])}</div><div class="fd-alt">O: ${esc(m.opts[1-day])}</div></div><button class="w-go ${ok?'':'solid'}" data-meal="${m.id}">${ok?'✓':'En plan'}</button></div>`; }).join('')}
     <div class="w-row"><div class="w-row-main"><div class="w-row-name">Agua · ${D.water||0} L</div><div class="w-row-sub">Meta: 3 L al día (más con el cardio)</div></div><button class="w-go" id="fdWater">+ 0.5 L</button></div>
     <div class="w-sec" style="margin-top:20px;">¿Comiste algo fuera del plan?</div>
-    <div class="w-note" style="margin-top:-2px;">Sé honesto: cada antojo cuesta −${FIT_PEN} de vida, −15 XP, pierdes la misión de macros del día, tu racha vuelve a 0 y apartas $${wFmt(fitCfg().fine)} para tu meta de $100k.</div>
+    <div class="w-note" style="margin-top:-2px;">Sé honesto: cada antojo cuesta −${FIT_PEN} de vida, −15 XP, pierdes la misión de macros del día, tu racha vuelve a 0 y apartas $${wFmt(fitCfg().fine)} para tu meta de $50k.</div>
     <div class="fd-bad">${Object.entries(BAD).map(([k,b])=>`<button data-bad="${k}"><span>${b.ic}</span>${b.name}</button>`).join('')}</div>
     ${bad.length?`<div class="w-sec">Antojos de hoy</div>${bad.map(b=>`<div class="w-xprow"><span>${BAD[b.k].ic} ${BAD[b.k].name}</span><b>${b.fixed?'reparado':'−'+FIT_PEN+' vida'}</b></div>`).join('')}`:''}
     <div class="w-sec">Cámbialo por</div>${SWAPS.map(([a,b])=>`<div class="w-xprow"><span>${a}</span><b style="font-family:inherit;font-weight:500;color:#f1d99a;white-space:normal;text-align:right;">${b}</b></div>`).join('')}
@@ -7988,7 +8010,7 @@ function bindComida(){ const t=today(), $=id=>document.getElementById(id); bindF
 /* ---------- Metas ---------- */
 function fitMetasHTML(){
   const g=goalsInfo(), c=g.c, pct=Math.min(100, g.m.est/c.money*100), due=finesDue();
-  return `<div class="gl-card gold"><div class="ft-k">${c.turns18?gDay(c.turns18).toLocaleDateString('es-MX',{day:'numeric',month:'long',timeZone:'UTC'}).toUpperCase()+' · CUMPLES 18':'TU META DE DINERO'}</div>${c.turns18?`<div class="gl-big">${g.d18>0?g.d18:0}<span> días</span></div>`:`<div class="w-form two" style="margin:8px 0;"><label>¿Para qué fecha es tu meta?<input type="date" id="glBday"></label><button class="w-go solid" id="glBdaySave">Guardar</button></div>`}
+  return `<div class="gl-card gold"><div class="ft-k">${c.turns18?gDay(c.turns18).toLocaleDateString('es-MX',{day:'numeric',month:'long',timeZone:'UTC'}).toUpperCase()+' · CUMPLES 18':'META · $50,000 · ANTES DEL 19 DE DICIEMBRE'}</div>${c.turns18?`<div class="gl-big">${g.d18>0?g.d18:0}<span> días</span></div>`:`<div class="w-form two" style="margin:8px 0;"><label>¿Para qué fecha es tu meta?<input type="date" id="glBday"></label><button class="w-go solid" id="glBdaySave">Guardar</button></div>`}
       <div class="gl-row"><span>En tu cuenta</span><b>$${wFmt(g.m.est)}</b></div><div class="ct-track"><i style="width:${pct}%"></i></div>
       <div class="gl-row"><span>Te faltan</span><b>$${wFmt(g.left)}</b></div>
       ${c.turns18?`<div class="gl-row"><span>Necesitas</span><b>$${wFmt(g.perDay)} por día · $${wFmt(g.perWeek)} por semana</b></div>`:''}
@@ -8001,6 +8023,14 @@ function fitMetasHTML(){
       ${g.projInter!=null?`<div class="gl-row"><span>A tu ritmo llegas con</span><b>${g.projInter.toFixed(1)} kg</b></div>`:''}
       <div class="gl-s">En estas semanas lo que más cambia cómo te ves: bajar la grasa del abdomen sin perder músculo, hombros y espalda más anchos, y desinflamarte quitando azúcar. Cada día cuenta.</div>
       <div class="w-form two" style="margin:10px 0 0;"><label>Fecha del Interprepas<input type="date" id="glInter" value="${c.inter}"></label><button class="w-go" id="glInterSave">Guardar</button></div></div>
+    <div class="gl-card"><div class="ft-k">TU ANÁLISIS 360 · DE TUS FOTOS Y VIDEO</div>
+      <div class="gl-s" style="margin-top:6px;">Tienes buena estructura: hombros con base, brazos con forma y antebrazo marcado. Lo que tapa todo es una capa de grasa que se nota en la cara y el torso. No te falta músculo para tu edad: te sobra grasa encima. Ese es el orden del plan.</div>
+      <div class="lr-key"><b>1. Perder grasa (lo que más te va a cambiar)</b>Déficit moderado con tus macros, 10,000 pasos diarios y cero azúcar líquida. La cara y la cintura son lo primero que se afila.</div>
+      <div class="lr-key"><b>2. Deltoide lateral y espalda ancha</b>Elevaciones laterales y jalones casi a diario: hacen la V y te hacen ver más delgado de cintura sin perder un gramo más.</div>
+      <div class="lr-key"><b>3. Pecho superior y brazos</b>Press inclinado primero en tus días de empuje, curls e tríceps con progresión de peso.</div>
+      <div class="gl-s">Tu semana del reto:</div>
+      ${[1,2,3,4,5,6,0].map(w=>`<div class="w-xprow"><span>${['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'][w]}</span><b style="font-family:inherit;font-weight:500;color:${gDay(today()).getUTCDay()===w?'#f1d99a':'#bdbdbd'};white-space:normal;text-align:right;">${RETO_PROGRAM[w].n}</b></div>`).join('')}
+      ${retoDay(today())?`<div class="gl-s" style="margin-top:8px;">Vas en el <b style="color:#fff">día ${retoDay(today())} de ${retoTotal()}</b> del reto (16 nov – 31 dic). Tu foto diaria está en Álbum.</div>`:''}</div>
     <div class="gl-card"><div class="ft-k">TU META DE FÍSICO</div><div class="gl-t">Tipo Mark Wahlberg en los 90</div>
       <div class="gl-s">Hombros redondos y anchos, espalda en V, brazos marcados y abdomen visible, con la cintura cerrada. Para llegar ahí:</div>
       <div class="lr-key"><b>1. Bajar grasa</b>Es lo primero que se va a notar: abdomen y cintura. Déficit moderado, mucha proteína y cero azúcar líquida.</div>
@@ -8125,7 +8155,7 @@ function pocketPref(){ try{ return localStorage.getItem('mm:game9-mode')||''; }c
 function isPhone(){ try{ const coarse=window.matchMedia && matchMedia('(pointer:coarse)').matches; return coarse && Math.min(screen.width||innerWidth, screen.height||innerHeight)<=600; }catch(e){ return false; } }
 let POCKET = pocketPref()==='pocket' || (pocketPref()!=='3d' && isPhone());
 let pkTab='hoy', PK_ROOT=false, pkMin=false, pkBound=false, pkIv=null;
-const PK_ROOTS = ['Hoy','Tu físico','Tu contenido','Notas','Más'];
+const PK_ROOTS = ['Hoy','Tu físico','Dinero','Álbum','Tu contenido','Notas','Más'];
 function setAppMode(m){ saveValue('game9-mode', m); try{ localStorage.setItem('mm:game9-mode', m); }catch(e){} setTimeout(()=>location.reload(), 150); }
 
 /* ---------- lo que en el celular no existe: el mundo 3D ---------- */
@@ -8169,11 +8199,13 @@ function pocketBind(){
   on('wsExit', ()=>{ if(!POCKET) return; pkMin=true; document.getElementById('screen-world').classList.add('pk-min'); pocketTab('hoy'); });
   document.querySelectorAll('#pkTabs [data-pk]').forEach(b=>b.addEventListener('click',()=>pocketTab(b.dataset.pk)));
 }
-function pocketHighlight(title){ const map={'Hoy':'hoy','Tu físico':'fisico','Tu contenido':'grabar','Notas':'notas','Más':'mas'}; const k=map[title]; if(!k) return; document.querySelectorAll('#pkTabs [data-pk]').forEach(b=>b.classList.toggle('on', b.dataset.pk===k)); }
+function pocketHighlight(title){ const map={'Hoy':'hoy','Tu físico':'fisico','Dinero':'dinero','Álbum':'album','Tu contenido':'mas','Notas':'mas','Más':'mas'}; const k=map[title]; if(!k) return; document.querySelectorAll('#pkTabs [data-pk]').forEach(b=>b.classList.toggle('on', b.dataset.pk===k)); }
 function pocketTab(t){
   pkTab=t||'hoy'; PK_ROOT=true;
   try{
     if(pkTab==='fisico') openFisico(FIT_TAB||'hoy');
+    else if(pkTab==='dinero') openDinero();
+    else if(pkTab==='album') openAlbum();
     else if(pkTab==='grabar') openContenido();
     else if(pkTab==='notas') openNotas();
     else if(pkTab==='mas') pocketMas();
@@ -8191,14 +8223,14 @@ function pocketHeader(){
   el.innerHTML=`<div class="pk-row"><div class="pk-lv"><svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3.5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#f1d99a" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="${(100.5*(1-pct)).toFixed(1)}" transform="rotate(-90 20 20)"/></svg><b>${L}</b></div>
       <div class="pk-mid"><div class="pk-name">${esc(worldPlayerName())}</div><div class="pk-bars"><span>Vida</span><div class="w-track"><div class="fill ${life.hp<35?'low':''}" style="width:${life.dead?0:life.hp}%"></div></div><em>${life.dead?'Sin vida':life.hp}</em></div></div>
       <button class="pk-3d" id="pkGoals">Metas</button></div>
-    <div class="pk-chips">${g.d18>=0?`<span>18 en <b>${g.d18} d</b></span><span><b>$${wFmt(g.m.est/1000)}k</b>/100k</span>`:''}${g.di>0?`<span>Interprepas <b>${g.di} d</b></span>`:''}${!f && h>=4 && h<12?`<span>Ayuno <b data-left="${Math.round((12-h)*3600)}">${fmtLeft((12-h)*3600)}</b></span>`:''}</div>`;
+    <div class="pk-chips">${g.d18>=0?`<span>19 dic en <b>${g.d18} d</b></span><span><b>$${wFmt(g.m.est/1000)}k</b>/50k</span>`:''}${retoDay(today())?`<span>Reto <b>día ${retoDay(today())}/${retoTotal()}</b></span>`:''}${emergOn(today())?`<span style="color:#9fc2ff;border-color:rgba(159,194,255,0.4)">Día especial</span>`:''}${!f && h>=4 && h<12?`<span>Ayuno <b data-left="${Math.round((12-h)*3600)}">${fmtLeft((12-h)*3600)}</b></span>`:''}</div>`;
   const gb=document.getElementById('pkGoals'); if(gb) gb.onclick=()=>{ pkTab='fisico'; FIT_TAB='metas'; pocketTab('fisico'); };
 }
 
 /* ---------- Hoy ---------- */
 const PK_MISSION = {
   morning:{l:'Ver', fn:()=>openRutina()}, deep:{l:'▶', fn:()=>startSession('deep'), q:'deep'}, video:{l:'Grabar', fn:()=>openContenido()},
-  fast:{l:'Ver', fn:()=>openRutina()}, gym:{l:'Mi entreno', fn:()=>openFisico('hoy')}, cardio:{l:'▶', fn:()=>startSession('cardio')},
+  fast:{l:'Ver', fn:()=>openRutina()}, gym:{l:'Mi entreno', fn:()=>openFisico('hoy')}, cardio:{l:'Poner pasos', fn:()=>askSteps()},
   nutri:{l:'Mi comida', fn:()=>openFisico('comida')}, sleep:{l:'▶ Dormir', fn:()=>startSession('sleep')}, read:{l:'▶', fn:()=>startSession('read')},
   rel:{l:'Hecho', fn:()=>{ doQuick('rel',false); setTimeout(()=>pocketTab('hoy'),250); }}, calls:{l:'▶', fn:()=>startSession('calls')},
 };
@@ -8207,12 +8239,14 @@ function pocketHoy(){
   const cards=[], T0=foodTot(t), M0=fitMacros();
   if(activeSession && pkMin) cards.push(`<button class="pk-card live" id="pkBack"><i class="pk-dot"></i><div><div class="pk-ck">EN SESIÓN</div><div class="pk-ct">${ACT[activeSession.act].name} · <b data-pksess>${fmtLeft(sessionElapsed())}</b></div></div><span>Volver</span></button>`);
   if(h>=11.5 || T0.kcal>0) cards.push(`<label class="pk-card cam"><div><div class="pk-ck">TU COMIDA · ${wFmt(T0.kcal)}/${wFmt(M0.kcal)} KCAL</div><div class="pk-ct">¿Qué vas a comer?</div><div class="pk-cs">Tómale foto y se calcula y se guarda solo.</div></div><span>📷 Foto</span><input type="file" id="pkFood" accept="image/*" hidden></label>`);
+  if(emergOn(t)) cards.push(`<button class="pk-card emerg" id="pkEmerg"><div><div class="pk-ck">DÍA ESPECIAL${(emergLog[t].reason?' · '+esc(emergLog[t].reason).toUpperCase():'')}</div><div class="pk-ct">Plan de emergencia activo</div><div class="pk-cs">Hoy solo lo esencial: pésate, 8,000 pasos, come lo mejor posible y duerme. Mañana vuelves con todo.</div></div><span>Ver</span></button>`);
+  if(retoDay(t) && !(albumLog||{})[t]) cards.push(`<label class="pk-card cam" style="cursor:pointer"><div><div class="pk-ck">RETO · DÍA ${retoDay(t)} DE ${retoTotal()}</div><div class="pk-ct">Tu foto de hoy</div><div class="pk-cs">Misma pose, mismo lugar, misma luz. Así se ve el cambio.</div></div><span>📸 Tomar</span><input type="file" id="pkAlbum" accept="image/*" capture="user" hidden></label>`);
   if(!weighed) cards.push(`<button class="pk-card gold" id="pkWeigh"><div><div class="pk-ck">TODOS LOS DÍAS</div><div class="pk-ct">Pésate hoy</div><div class="pk-cs">Recién despierto, antes de comer o tomar agua.</div></div><span>Pesarme</span></button>`);
   if(!D.ans && h<20) cards.push(`<button class="pk-card" id="pkFit"><div><div class="pk-ck">TU ENTRENO</div><div class="pk-ct">¿Qué vas a hacer hoy?</div><div class="pk-cs">Contesta y te diseño el entreno del día.</div></div><span>Diseñar</span></button>`);
   else if(D.plan && !D.done){ const tot=D.plan.ex.reduce((s,e)=>s+e.sets,0), dn=D.plan.ex.reduce((s,e,i)=>s+Math.min(e.sets,((D.sets||{})[i]||[]).length),0); cards.push(`<button class="pk-card" id="pkFit"><div><div class="pk-ck">TU ENTRENO DE HOY</div><div class="pk-ct">${esc(D.plan.name)}</div><div class="pk-cs">${dn}/${tot} series · ≈ ${D.plan.est} min</div></div><span>Abrir</span></button>`); }
   if(nr && h<12) cards.push(`<button class="pk-card" id="pkRout"><div><div class="pk-ck">RUTINA DE LA MAÑANA · ${routineCount(t)}/${ROUTINE_STEPS.length}</div><div class="pk-ct">Sigue: ${esc(nr.name)}</div></div><span>Ver</span></button>`);
   const T=foodTot(t), M=fitMacros(), st=sugarStreak(), clips=clipsCount(t);
-  const tiles=`<div class="pk-tiles"><button data-go="comida"><b>${wFmt(T.kcal)}</b><span>de ${wFmt(M.kcal)} kcal</span></button><button data-go="comida"><b>${Math.round(T.p)} g</b><span>proteína de ${M.prot}</span></button><button data-go="comida"><b>${st}</b><span>días sin azúcar</span></button><button data-go="grabar"><b>${clips}/${CLIP_GOAL}</b><span>clips hoy</span></button></div>`;
+  const tiles=`<div class="pk-tiles"><button data-go="comida"><b>${wFmt(T.kcal)}</b><span>de ${wFmt(M.kcal)} kcal</span></button><button data-go="comida"><b>${Math.round(T.p)} g</b><span>proteína de ${M.prot}</span></button><button data-go="comida"><b>${st}</b><span>días sin azúcar</span></button><button data-go="pasos"><b>${wFmt(stepsOn(t))}</b><span>pasos de 10,000</span></button></div>`;
   const rows=res.m.map(x=>{ const P=PK_MISSION[x.id]; return `<div class="w-row ${x.done?'done':''}"><div class="w-row-main"><div class="w-row-name">${x.done?'<span class="w-ok">✓</span> ':''}${esc(x.name)}</div><div class="w-row-sub">${x.xp} XP${x.sub?' · '+x.sub:''}</div></div>${x.done||!P?'':`<div class="w-2btn"><button class="w-go ${P.q?'':'solid'}" data-pm="${x.id}">${P.l}</button>${P.q?`<button class="w-go" data-pq="${P.q}">Ya</button>`:''}</div>`}</div>`; }).join('');
   const flash=fl.map(x=>{ const st2= x.claimed ? '<span class="w-tag ok">Cobrado</span>' : x.open ? `<span class="w-tag live" data-left="${x.left}">${fmtLeft(x.left)}</span>` : '<span class="w-tag off">Expiró</span>'; return `<div class="w-row ${x.claimed?'done':''}"><div class="w-row-main"><div class="w-row-name">${esc(x.f.name)}</div><div class="w-row-sub">Antes de las ${hourLabel(x.f.until)} · +${x.f.xp} XP${x.f.x2?' · paga doble':''}</div></div>${st2}</div>`; }).join('');
   openSheet('Hoy', `<div class="pk-hello">${greeting()}, ${esc(firstName())}<span>${(s=>s.charAt(0).toUpperCase()+s.slice(1))(dateLabel())}</span></div>
@@ -8221,21 +8255,25 @@ function pocketHoy(){
     <div class="w-sec">Misiones de hoy · ${res.done}/${res.total}</div>
     <div class="w-note" style="margin-top:-2px;">Todas: +120 XP y +10 de vida. Con menos de la mitad pierdes 15 de vida.</div>${rows}
     <div class="w-sec">Retos relámpago</div>${flash||'<div class="w-note">Hoy no hay retos.</div>'}
-    <button class="w-go wide" id="pkRetos">Ver tareas, retos de la semana y cofre</button>`);
+    <button class="w-go wide" id="pkRetos">Ver tareas, retos de la semana y cofre</button>
+    <button class="w-go wide" id="pkEmg" style="margin-top:8px;${emergOn(t)?'border-color:rgba(159,194,255,0.5);color:#9fc2ff;':''}">${emergOn(t)?'Día especial activo · cambiar o quitar':'¿Hoy no es un día normal? Activa el plan de emergencia'}</button>`);
   const $=id=>document.getElementById(id);
   if($('pkBack')) $('pkBack').onclick=()=>stageSession(true);
   if($('pkFood')) $('pkFood').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(!f) return; FIT_TAB='comida'; pocketTab('fisico'); analyzeFoodPhoto(f); };
   if($('pkWeigh')) $('pkWeigh').onclick=()=>runRoutineStep('weigh');
+  if($('pkEmerg')) $('pkEmerg').onclick=()=>openEmergencia();
+  if($('pkEmg')) $('pkEmg').onclick=()=>openEmergencia();
+  if($('pkAlbum')) $('pkAlbum').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) saveAlbumPhoto(f); };
   if($('pkFit')) $('pkFit').onclick=()=>{ pkTab='fisico'; FIT_TAB='hoy'; pocketTab('fisico'); };
   if($('pkRout')) $('pkRout').onclick=()=>openRutina();
   $('pkRetos').onclick=()=>openRetos();
-  document.querySelectorAll('.pk-tiles [data-go]').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.go==='grabar') pocketTab('grabar'); else { FIT_TAB='comida'; pocketTab('fisico'); } }));
+  document.querySelectorAll('.pk-tiles [data-go]').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.go==='pasos') askSteps(); else { FIT_TAB='comida'; pocketTab('fisico'); } }));
   document.querySelectorAll('[data-pm]').forEach(b=>b.addEventListener('click',()=>PK_MISSION[b.dataset.pm].fn()));
   document.querySelectorAll('[data-pq]').forEach(b=>b.addEventListener('click',()=>{ doQuick(b.dataset.pq,false); setTimeout(()=>pocketTab('hoy'),250); }));
 }
 /* ---------- Más ---------- */
 function pocketMas(){
-  const items=[['mot','Motívame','Cuando no tengas ganas: algo que te prenda',()=>openMotivame()],['apr','Aprende','Estoicismo, inteligencia, lo que quieras',()=>openAprende()],['dia','Tu día','Rutina de la mañana, ayuno, gym y cardio',()=>openRutina()],
+  const items=[['gra','Grabar contenido','Clips para tu marca personal y Hashbula',()=>openContenido()],['not','Notas','Escribe o dicta tus ideas',()=>openNotas()],['mot','Motívame','Cuando no tengas ganas: algo que te prenda',()=>openMotivame()],['apr','Aprende','Estoicismo, inteligencia, lo que quieras',()=>openAprende()],['dia','Tu día','Rutina de la mañana, ayuno, gym y cardio',()=>openRutina()],
     ['ret','Tareas y retos','Retos relámpago, de la semana y tu cofre',()=>openRetos()],['neg','Negocios','Tus prospectos en Google Maps',()=>openNegocios()],['act','Empezar una sesión','Deep Work, lectura, llamadas y más con cronómetro',()=>openActivities()],
     ['yo','Tu perfil','Nivel, historia y tu partida',()=>openYo('perfil')],['his','Tu historia','Lo que has hecho día por día',()=>openYo('historia')]];
   openSheet('Más', `${items.map(([k,n,s])=>`<button class="pk-item" data-mi="${k}"><div><b>${n}</b><span>${s}</span></div><i>›</i></button>`).join('')}
@@ -8255,31 +8293,31 @@ function deadState(){ try{ return gameSnapshot().life; }catch(e){ return {dead:f
 function renderDeadLock(){
   const el=document.getElementById('deadLock'); if(!el) return; if(el.classList.contains('revived')) return;
   const L=deadState(), running=activeSession && activeSession.act==='run';
-  if(_deadWas===true && !L.dead){ _deadWas=false; el.classList.add('show','revived'); el.innerHTML=`<div class="dl-in"><div class="dl-k">LO LOGRASTE</div><div class="dl-big">REVIVISTE</div><div class="dl-s">Corriste tus 10 km. Empiezas con 60 de vida. Vuelve a ganarte todo.</div><button class="dl-go" id="dlOk">Volver a mi vida</button></div>`;
+  if(_deadWas===true && !L.dead){ _deadWas=false; el.classList.add('show','revived'); el.innerHTML=`<div class="dl-in"><div class="dl-k">LO LOGRASTE</div><div class="dl-big">REVIVISTE</div><div class="dl-s">Corriste tus 5 km sin parar. Empiezas con 60 de vida. Vuelve a ganarte todo.</div><button class="dl-go" id="dlOk">Volver a mi vida</button></div>`;
     document.getElementById('dlOk').onclick=()=>{ el.classList.remove('show','revived'); if(typeof POCKET!=='undefined' && POCKET) pocketTab('hoy'); else if(W && W.avatar){ setPose(W.avatar,'celebrate',3); } }; return; }
   _deadWas=!!L.dead;
   const show = L.dead && currentScreen==='world' && !running;
   el.classList.toggle('show', !!show); document.body.classList.toggle('is-dead', !!L.dead);
   if(!show){ if(!L.dead) el.innerHTML=''; return; }
-  const t=today(), km=Math.round(kmOn(t)*10)/10, pct=Math.min(1, km/10), runs=runsLog.filter(r=>r.date===t);
+  const t=today(), km=Math.round(bestRunOn(t)*10)/10, pct=Math.min(1, km/5), runs=runsLog.filter(r=>r.date===t);
   const since=L.deathDate ? fmtDate(L.deathDate) : 'hoy', R=54, C=2*Math.PI*R;
   el.innerHTML=`<div class="dl-in">
     <div class="dl-k">${esc(worldPlayerName())} · SIN VIDA DESDE EL ${since.toUpperCase()}</div>
     <div class="dl-big">GAME OVER</div>
-    <div class="dl-s">Todo tu juego está apagado: misiones, retos, XP, negocios y entrenos. La única forma de volver es correr <b>10 km en un mismo día</b>.</div>
-    <div class="dl-ring"><svg viewBox="0 0 128 128" width="150" height="150"><circle cx="64" cy="64" r="${R}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="9"/><circle cx="64" cy="64" r="${R}" fill="none" stroke="#ff5a4d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pct)).toFixed(1)}" transform="rotate(-90 64 64)"/></svg><div><b>${km}</b><span>de 10 km hoy</span></div></div>
+    <div class="dl-s">Todo tu juego está apagado: misiones, retos, XP, negocios y entrenos. La única forma de volver es una corrida de <b>5 km sin parar</b>: una sola corrida, sin detenerte.</div>
+    <div class="dl-ring"><svg viewBox="0 0 128 128" width="150" height="150"><circle cx="64" cy="64" r="${R}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="9"/><circle cx="64" cy="64" r="${R}" fill="none" stroke="#ff5a4d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C*(1-pct)).toFixed(1)}" transform="rotate(-90 64 64)"/></svg><div><b>${km}</b><span>tu mejor corrida · meta 5 km</span></div></div>
     ${runs.length?`<div class="dl-runs">${runs.map(r=>`<span>${(+r.km).toFixed(1)} km${r.min?` · ${r.min} min`:''}</span>`).join('')}</div>`:''}
     <button class="dl-go" id="dlRun">▶ Correr para revivir</button>
     ${_deadKmOpen?`<div class="dl-form"><label>¿Cuántos km corriste?<input type="number" id="dlKm" min="0.1" max="60" step="0.1" inputmode="decimal" placeholder="5.0"></label><label>¿Cuántos minutos?<input type="number" id="dlMin" min="1" max="600" inputmode="numeric" placeholder="35"></label><button class="dl-go solid2" id="dlSave">Guardar corrida</button></div>`
       :`<button class="dl-sec" id="dlLog">Ya corrí (con mi reloj o Strava): registrar km</button>`}
-    <div class="dl-note">Pueden ser varias corridas que sumen 10 km antes de las 12 de la noche. Al revivir empiezas con 60 de vida. Tus datos están a salvo.</div></div>`;
+    <div class="dl-note">Tiene que ser UNA sola corrida de 5 km sin parar, antes de las 12 de la noche. Las corridas que no lleguen quedan registradas, pero no suman entre sí. Al revivir empiezas con 60 de vida; tus datos están a salvo.</div></div>`;
   const $=id=>document.getElementById(id);
   $('dlRun').onclick=()=>{ el.classList.remove('show'); startSession('run'); };
   if($('dlLog')) $('dlLog').onclick=()=>{ _deadKmOpen=true; renderDeadLock(); setTimeout(()=>{ const i=$('dlKm'); if(i) i.focus(); },50); };
   if($('dlSave')) $('dlSave').onclick=()=>{ const k=parseFloat($('dlKm').value)||0, m=parseInt($('dlMin').value)||0; if(k<0.1||k>60){ alert('Pon los kilómetros que corriste.'); return; }
     if(m && k/(m/60)>25){ alert('Ese ritmo es demasiado rápido para correr. Revisa los km o los minutos.'); return; }
     runsLog.push({date:t, km:Math.round(k*10)/10, min:m||0, manual:true}); saveJSON('game3-runs', runsLog); _deadKmOpen=false;
-    const now=Math.round(kmOn(t)*10)/10; if(now<10) worldToast(`${now} de 10 km`, `Te faltan ${Math.round((10-now)*10)/10} km hoy`); scheduleGameCheck(); setTimeout(renderDeadLock, 250); };
+    const nb=Math.round(bestRunOn(t)*10)/10; if(nb<5) worldToast(`Esa corrida: ${Math.round(k*10)/10} km`, `Para revivir: 5 km sin parar en una sola corrida`); scheduleGameCheck(); setTimeout(renderDeadLock, 250); };
 }
 (function(){
   const _gc=gameCheck; gameCheck=function(){ const r=_gc.apply(this, arguments); renderDeadLock(); return r; };
@@ -8342,6 +8380,11 @@ async function initAll(){
   contentLog = await loadJSON('game7-content', {});
   contentPipe = await loadJSON('game7-pipe', []);
   fitData = Object.assign({cfg:{}, days:{}, balance:[], fines:[]}, await loadJSON('game8-fit', {}));
+  stepsLog = await loadJSON('game10-steps', {});
+  emergLog = await loadJSON('game10-emerg', {});
+  albumLog = await loadJSON('game10-album', {});
+  clipPostLog = await loadJSON('game10-clip', {});
+  dropLog = await loadJSON('game10-drop', {});
   { const old=addDaysStr(today(),-21); let ch=false; Object.keys(fitData.days||{}).forEach(d=>{ if(d<old) (fitData.days[d].food||[]).forEach(f=>{ if(f.thumb){ f.thumb=null; ch=true; } }); }); if(ch) saveJSON('game8-fit', fitData); }
   { const m=await loadValue('game9-mode',''); if(m==='pocket' && !POCKET) POCKET=true; if(m==='3d') POCKET=false; }
   // v5: tu personaje se parece a ti (una sola vez, luego lo puedes cambiar en Yo)
@@ -8369,6 +8412,178 @@ async function initAll(){
   renderHome();
 }
 initAll();
+</script>
+<style>  /* ===== v10 ===== */
+  .pk-card.emerg{border-color:rgba(159,194,255,0.4); background:radial-gradient(120% 140% at 0 0, rgba(159,194,255,0.12), transparent 60%), #0f0f10;}
+  .pk-card.emerg .pk-ck{color:#9fc2ff;}
+  .dn-front{border-radius:16px; padding:13px 14px; margin-bottom:8px; background:#0f0f10; border:1px solid rgba(255,255,255,0.08);}
+  .dn-h{display:flex; justify-content:space-between; align-items:center; gap:8px;}
+  .dn-h b{font-family:'Oswald',sans-serif; font-weight:500; font-size:16px; color:#fff;}
+  .dn-n{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#bdbdbd; border:1px solid #2c2c2c; border-radius:999px; padding:3px 9px; white-space:nowrap;}
+  .dn-n.ok{color:#140f05; background:#f1d99a; border-color:#f1d99a;}
+  .dn-s{font-size:12px; color:#9a9a9a; line-height:1.5; margin-top:5px;}
+  .ab-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(52px,1fr)); gap:5px;}
+  .ab-c{position:relative; aspect-ratio:3/4; border-radius:10px; background:#111112 center/cover no-repeat; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:flex-end; padding:4px 5px; color:#6f6f6f; font-family:'JetBrains Mono',monospace; font-size:10px; cursor:default;}
+  .ab-c span{position:relative; z-index:1; text-shadow:0 1px 3px rgba(0,0,0,0.9);}
+  .ab-c.has{cursor:pointer; border-color:rgba(241,217,154,0.35); color:#fff;}
+  .ab-c.has::after{content:''; position:absolute; inset:0; border-radius:10px; background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,0.55));}
+  .ab-c.today{border-color:rgba(241,217,154,0.6); color:#f1d99a; border-style:dashed;}
+  .ab-c.miss{opacity:0.4;}
+  .ab-cmp{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .ab-cmp figure{margin:0;} .ab-cmp img{display:block; width:100%; aspect-ratio:3/4; object-fit:cover; border-radius:14px; border:1px solid rgba(255,255,255,0.1);}
+  .ab-cmp figcaption{font-size:11px; color:#9a9a9a; margin-top:5px; text-align:center;}
+  .ab-view{border-radius:16px; overflow:hidden; border:1px solid rgba(241,217,154,0.3); margin:10px 0; background:#0c0c0d;}
+  .ab-view img{display:block; width:100%; max-height:60vh; object-fit:contain; background:#000;}
+  .ab-vc{display:flex; align-items:center; gap:10px; padding:10px 12px;}
+  .ab-vc b{font-family:'Oswald',sans-serif; color:#fff;} .ab-vc span{font-size:12px; color:#9a9a9a; margin-right:auto;}
+</style>
+<script>/* =====================================================================
+   v10: DINERO (camino al $50k), ÁLBUM DEL RETO y DÍA DE EMERGENCIA
+===================================================================== */
+function saveDin(){ saveJSON('dinero-data', dinero); }
+Object.assign(PK_MISSION, {
+  eweigh:{l:'Pesarme', fn:()=>runRoutineStep('weigh')},
+  enutri:{l:'Mi comida', fn:()=>openFisico('comida')},
+  emove:{l:'▶ 20 min', fn:()=>startSession('caminar')},
+});
+/* sin retos relámpago en días especiales */
+(function(){ const _fs=flashStatus; flashStatus=function(d){ if(emergOn(d||today())) return []; return _fs.apply(this, arguments); }; })();
+/* XP del reto y del camino al 50k */
+(function(){
+  const _xp=gameXP; gameXP=function(s){ const r=_xp(s); const t=today(); let v=0;
+    Object.keys(albumLog||{}).forEach(d=>{ if(d<=t) v+=15; });
+    Object.keys(clipPostLog||{}).forEach(d=>{ if(d<=t) v+=Math.min(3,+clipPostLog[d]||0)*10; });
+    Object.keys(dropLog||{}).forEach(d=>{ if(d<=t) v+=Math.min(2,+dropLog[d]||0)*10; });
+    if(v){ r.parts['Reto y camino al 50k']=v; r.total+=v; }
+    return r; };
+  XP_RULES.push(['Foto diaria del reto','+15'], ['Clip subido (clipping, máx. 3 al día)','+10'], ['Acción de dropshipping (máx. 2 al día)','+10']);
+})();
+/* botón de emergencia también en "Tu día" */
+(function(){ const _or=openRutina; openRutina=function(){ const r=_or.apply(this, arguments); try{ const b=document.getElementById('wSheetBody'); if(b && !document.getElementById('rtEmg')){ const d=document.createElement('button'); d.id='rtEmg'; d.className='w-go wide'; d.style.marginTop='12px'; if(emergOn(today())){ d.style.borderColor='rgba(159,194,255,0.5)'; d.style.color='#9fc2ff'; } d.textContent=emergOn(today())?'Día especial activo · cambiar o quitar':'¿Hoy no es un día normal? Plan de emergencia'; d.onclick=()=>openEmergencia(); b.appendChild(d); } }catch(e){} return r; }; })();
+(function(){ const _sr=document.getElementById('wRtSteps'); })();
+document.addEventListener('click', e=>{ const b=e.target.closest && e.target.closest('#wRtSteps'); if(b) askSteps(); });
+
+/* ---------- Día de emergencia ---------- */
+const EMG_REASONS=[['familia','Salida con mi familia'],['imprevisto','Imprevisto'],['viaje','Viaje'],['malo','Me siento mal'],['otro','Otro']];
+function openEmergencia(){
+  const t=today(), on=emergOn(t), wk=emergWeek();
+  openSheet('Día especial', `
+    <div class="ft-hero" style="border-color:rgba(159,194,255,0.3);background:radial-gradient(120% 140% at 0 0, rgba(159,194,255,0.1), transparent 55%), #0f0f10;">
+      <div class="ft-k" style="color:#9fc2ff;">PLAN DE EMERGENCIA</div>
+      <div class="ft-t">${on?'Hoy es un día especial':'¿Hoy no es un día normal?'}</div>
+      <div class="ft-s">Para días con salida familiar, imprevistos o viaje. El juego no te castiga por no hacer tu rutina completa: hoy solo cuenta lo esencial.</div></div>
+    <div class="w-sec">Hoy solo tienes que:</div>
+    ${['Pesarte en la mañana','8,000 pasos (donde sea: plaza, calle, lo que haya)','Comer lo mejor posible y cero azúcar','20 min de movimiento si se puede (caminata rápida, lagartijas, lo que haya)','Dormir 7 horas'].map(x=>`<div class="w-xprow"><span>${x}</span><b>✓</b></div>`).join('')}
+    <div class="w-note">Los castigos por refresco, postre o chatarra siguen activos: día especial no es día libre de azúcar. ${wk>=2 && !on?`Ojo: ya llevas ${wk} días especiales esta semana. Más de 2 por semana ya no es emergencia, es excusa.`:''}</div>
+    ${on?`<div class="w-sec">Motivo</div><div class="w-note">${esc((emergLog[t]||{}).reason||'Sin motivo')}</div>
+      <button class="w-go solid wide" id="emgOff" style="margin-top:8px;">Quitar: hoy sí puedo con todo</button>`
+    :`<div class="w-sec">¿Qué pasó hoy?</div>
+      <div class="w-chips" id="emgR">${EMG_REASONS.map(([v,n])=>`<button type="button" class="w-chip" data-v="${v}">${n}</button>`).join('')}</div>
+      <button class="w-go solid wide" id="emgOn" style="margin-top:10px;">Activar el plan de emergencia para hoy</button>`}
+    <div class="w-note" style="margin-top:12px;">Tu racha y tu vida se cuidan igual: si cumples el plan de emergencia, el día cuenta como día cumplido.</div>`);
+  const $=id=>document.getElementById(id), body=document.getElementById('wSheetBody');
+  body.querySelectorAll('#emgR .w-chip').forEach(b=>b.addEventListener('click',()=>{ body.querySelectorAll('#emgR .w-chip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); }));
+  if($('emgOn')) $('emgOn').onclick=()=>{ const r=(body.querySelector('#emgR .w-chip.on')||{}); const rn=(EMG_REASONS.find(x=>x[0]===r.dataset?.v)||[])[1]||''; setEmerg(true, rn); worldToast('Día especial activado','Hoy solo lo esencial. Mañana con todo.'); if(typeof POCKET!=='undefined' && POCKET) pocketTab('hoy'); else closeSheet(); };
+  if($('emgOff')) $('emgOff').onclick=()=>{ setEmerg(false); worldToast('Día normal','Tus misiones completas están de vuelta'); if(typeof POCKET!=='undefined' && POCKET) pocketTab('hoy'); else closeSheet(); };
+}
+
+/* ---------- DINERO: camino al $50,000 (19 dic) ---------- */
+const DIN_SRC=[['vantia','Vantia'],['clipping','Clipping'],['drop','Dropshipping'],['otro','Otro']];
+function openDinero(keep){
+  const t=today(), g=goalsInfo(), c=g.c, pct=Math.min(100, g.m.est/c.money*100);
+  const calls=dinero.callsLog[t]||0, clips=+clipPostLog[t]||0, drops=+dropLog[t]||0, due=finesDue();
+  const incomes=(dinero.incomeLog||[]).slice(-8).reverse();
+  openSheet('Dinero', `
+    <div class="gl-card gold"><div class="ft-k">META · ANTES DEL 19 DE DICIEMBRE</div>
+      <div class="gl-big">$${wFmt(c.money/1000)}k<span> · faltan ${Math.max(0,g.d18)} días</span></div>
+      <div class="gl-row"><span>Llevas</span><b>$${wFmt(g.m.est)}</b></div>
+      <div class="ct-track"><i style="width:${pct}%"></i></div>
+      <div class="gl-row"><span>Te faltan</span><b>$${wFmt(g.left)}</b></div>
+      <div class="gl-row"><span>Ritmo necesario</span><b>$${wFmt(g.perDay)} al día · $${wFmt(g.perWeek)} a la semana</b></div>
+      <div class="w-form two" style="margin:10px 0 0;"><label>¿Cuánto tienes hoy? ($)<input type="number" id="dnBal" min="0" step="100" inputmode="numeric" placeholder="${Math.round(g.m.est)||''}"></label><button class="w-go solid" id="dnBalSave">Actualizar</button></div>
+      ${due?`<div class="gl-row" style="margin-top:10px;"><span>Multas por antojos</span><b>$${wFmt(due)}</b></div>`:''}</div>
+    <div class="w-sec">Tus 3 frentes de hoy</div>
+    <div class="dn-front"><div class="dn-h"><b>Prospección · Vantia</b><span class="dn-n ${calls>=5?'ok':''}">${calls}/5 llamadas</span></div>
+      <div class="dn-s">Páginas web, bots y menús QR a negocios de Tepic. Es tu frente más directo: 2 paquetes cerrados ya son $${wFmt(9997*2)}.</div>
+      <div class="w-form two" style="margin:8px 0 0;"><button class="w-go solid" data-dn="call">+1 llamada hecha</button><button class="w-go" data-dn="map">Mapa de negocios</button></div></div>
+    <div class="dn-front"><div class="dn-h"><b>Clipping</b><span class="dn-n ${clips>=3?'ok':''}">${clips}/3 clips subidos</span></div>
+      <div class="dn-s">Cortar y subir clips (GTA 6 es la ola). +10 XP por clip subido, máximo 3 al día. El dinero llega por volumen: sube diario.</div>
+      <div class="w-form two" style="margin:8px 0 0;"><button class="w-go solid" data-dn="clip">+1 clip subido</button><button class="w-go" data-dn="clipx" ${clips?'':'disabled'}>−1</button></div></div>
+    <div class="dn-front"><div class="dn-h"><b>Dropshipping · Vento</b><span class="dn-n ${drops>=1?'ok':''}">${drops} acciones hoy</span></div>
+      <div class="dn-s">Una acción diaria que mueva la tienda: subir producto, probar creativo, contestar pedidos. +10 XP por acción (máx. 2).</div>
+      <div class="w-form two" style="margin:8px 0 0;"><button class="w-go solid" data-dn="drop">+1 acción hecha</button><button class="w-go" data-dn="dropx" ${drops?'':'disabled'}>−1</button></div></div>
+    <div class="w-sec">Registrar un ingreso</div>
+    <div class="w-form"><label>Monto ($)<input type="number" id="dnAmt" min="0" step="50" inputmode="numeric" placeholder="9997"></label>
+      <div class="w-chips" id="dnSrc">${DIN_SRC.map(([v,n],i)=>`<button type="button" class="w-chip ${i===0?'on':''}" data-v="${v}">${n}</button>`).join('')}</div>
+      <button class="w-go solid wide" id="dnAdd">Sumar a mi cuenta</button></div>
+    ${incomes.length?`<div class="w-sec">Últimos ingresos</div>${incomes.map(e=>`<div class="w-xprow"><span>${fmtDate(e.date)}${e.src?` · ${(DIN_SRC.find(x=>x[0]===e.src)||[])[1]||e.src}`:''}</span><b>+$${wFmt(e.amount)}</b></div>`).join('')}`:''}
+    <div class="w-note" style="margin-top:12px;">Deep Work y tus llamadas también suman XP como siempre. Esto es el marcador del dinero real.</div>`, keep);
+  const $=id=>document.getElementById(id), body=document.getElementById('wSheetBody');
+  body.querySelectorAll('#dnSrc .w-chip').forEach(b=>b.addEventListener('click',()=>{ body.querySelectorAll('#dnSrc .w-chip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); }));
+  $('dnBalSave').onclick=()=>{ const v=parseFloat($('dnBal').value); if(!(v>=0)) return; fitData.balance=(fitData.balance||[]).filter(b=>b.date!==t); fitData.balance.push({date:t, amount:v}); fitSave(); renderGoalPill(); openDinero(true); worldToast('Saldo actualizado', `$${wFmt(v)} · te faltan $${wFmt(Math.max(0,c.money-v))}`); };
+  $('dnAdd').onclick=()=>{ const v=parseFloat($('dnAmt').value); if(!(v>0)) { $('dnAmt').focus(); return; } const src=(body.querySelector('#dnSrc .w-chip.on')||{}).dataset.v||'otro'; dinero.incomeLog=dinero.incomeLog||[]; dinero.incomeLog.push({date:t, amount:v, src}); saveDin(); openDinero(true); if(W && W.avatar && currentScreen==='world') setPose(W.avatar,'celebrate',2.5); worldToast(`+$${wFmt(v)}`, `Llevas $${wFmt(moneyNow().est)} de $${wFmt(c.money)}`); scheduleGameCheck(); };
+  body.querySelectorAll('[data-dn]').forEach(b=>b.addEventListener('click',()=>{ const k=b.dataset.dn;
+    if(k==='map'){ openNegocios(); return; }
+    if(k==='call'){ dinero.callsLog[t]=(dinero.callsLog[t]||0)+1; saveDin(); worldToast(`${dinero.callsLog[t]} llamadas hoy`, dinero.callsLog[t]>=5?'Frente de prospección cumplido':'Meta: 5'); }
+    if(k==='clip'){ clipPostLog=Object.assign({},clipPostLog); clipPostLog[t]=Math.min(20,(+clipPostLog[t]||0)+1); saveJSON('game10-clip', clipPostLog); worldToast(`${clipPostLog[t]} clips subidos hoy`, clipPostLog[t]<=3?'+10 XP':'Meta del día ya cumplida'); }
+    if(k==='clipx'){ clipPostLog=Object.assign({},clipPostLog); clipPostLog[t]=Math.max(0,(+clipPostLog[t]||0)-1); saveJSON('game10-clip', clipPostLog); }
+    if(k==='drop'){ dropLog=Object.assign({},dropLog); dropLog[t]=Math.min(10,(+dropLog[t]||0)+1); saveJSON('game10-drop', dropLog); worldToast('Acción de dropshipping hecha', dropLog[t]<=2?'+10 XP':'Ya cumpliste las de hoy'); }
+    if(k==='dropx'){ dropLog=Object.assign({},dropLog); dropLog[t]=Math.max(0,(+dropLog[t]||0)-1); saveJSON('game10-drop', dropLog); }
+    scheduleGameCheck(); openDinero(true); }));
+}
+
+/* ---------- ÁLBUM DEL RETO (16 nov – 31 dic) ---------- */
+function albumCount(){ return Object.keys(albumLog||{}).filter(d=>d>=RETO.start && d<=RETO.end).length; }
+async function saveAlbumPhoto(file){
+  const t=today();
+  try{
+    let r=await imgToBlob(file, 560, 0.72), url=r.url;
+    const trySave=u=>{ albumLog=Object.assign({},albumLog); albumLog[t]={d:t, img:u, ts:Date.now()}; return saveJSON('game10-album', albumLog); };
+    try{ localStorage.setItem('mm:__probe', url); localStorage.removeItem('mm:__probe'); }catch(e){ r=await imgToBlob(file, 380, 0.6); url=r.url; }
+    try{ trySave(url); }
+    catch(e){ const r2=await imgToBlob(file, 320, 0.55); try{ trySave(r2.url); }catch(e2){ alert('No cupo la foto en la memoria del juego. Borra fotos viejas del álbum o libera espacio.'); return; } }
+    worldToast(`Foto del día ${retoDay(t)||'—'} guardada · +15 XP`, `${albumCount()} fotos en tu álbum`);
+    if(W && W.avatar && currentScreen==='world') setPose(W.avatar,'film',2);
+    scheduleGameCheck();
+    if(typeof POCKET!=='undefined' && POCKET){ pkTab='album'; pocketTab('album'); } else openAlbum(true);
+  }catch(e){ alert('No pude abrir esa foto. Intenta otra vez.'); }
+}
+let ALB_VIEW=null;
+function openAlbum(keep){
+  const t=today(), total=retoTotal(), dn=retoDay(t), n=albumCount();
+  const days=[]; for(let i=1;i<=total;i++){ const d=addDaysStr(RETO.start, i-1); days.push({i, d, p:(albumLog||{})[d]}); }
+  const withP=days.filter(x=>x.p), first=withP[0], last=withP[withP.length-1];
+  const todayP=(albumLog||{})[t];
+  const view=ALB_VIEW && (albumLog||{})[ALB_VIEW] ? `<div class="ab-view"><img src="${albumLog[ALB_VIEW].img}" alt="Día ${retoDay(ALB_VIEW)}"><div class="ab-vc"><b>Día ${retoDay(ALB_VIEW)||'—'}</b><span>${fmtDate(ALB_VIEW)}</span><div style="display:flex;gap:8px;"><button class="w-go" id="abClose">Cerrar</button><button class="w-go ghost" id="abDel">Borrar</button></div></div></div>`:'';
+  openSheet('Álbum', `
+    <div class="ft-hero"><div class="ft-k">${RETO.name.toUpperCase()} · 16 NOV – 31 DIC</div>
+      <div class="ft-t">${dn?`Día ${dn} de ${total}`:(t<RETO.start?`Empieza el 16 de noviembre`:`Reto terminado`)}</div>
+      <div class="ft-s">Una foto diaria, misma pose y misma luz. El espejo engaña día a día; el álbum no.</div>
+      <div class="ct-track" style="margin-top:10px;"><i style="width:${Math.min(100,n/total*100)}%"></i></div>
+      <div class="ft-meta"><span>${n}/${total} fotos</span><span>+15 XP por foto</span></div></div>
+    ${todayP?`<div class="w-row done"><div class="w-row-main"><div class="w-row-name"><span class="w-ok">✓</span> Foto de hoy guardada</div></div><label class="w-go" style="cursor:pointer">Repetir<input type="file" id="abFile" accept="image/*" capture="user" hidden></label></div>`
+      :`<label class="w-go solid wide" style="cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">📸 Tomar la foto de hoy<input type="file" id="abFile" accept="image/*" capture="user" hidden></label>`}
+    ${view}
+    ${first && last && first.d!==last.d?`<div class="w-sec">Tu cambio</div><div class="ab-cmp"><figure><img src="${first.p.img}" alt="Inicio"><figcaption>Día ${first.i} · ${fmtDate(first.d)}</figcaption></figure><figure><img src="${last.p.img}" alt="Hoy"><figcaption>Día ${last.i} · ${fmtDate(last.d)}</figcaption></figure></div>`:''}
+    <div class="w-sec">Los ${total} días</div>
+    <div class="ab-grid">${days.map(x=>x.p?`<button class="ab-c has" data-ab="${x.d}" style="background-image:url('${x.p.img}')"><span>${x.i}</span></button>`:`<div class="ab-c ${x.d===t?'today':''} ${x.d<t?'miss':''}"><span>${x.i}</span></div>`).join('')}</div>
+    <div class="w-note" style="margin-top:10px;">Las fotos se guardan solo en este dispositivo, dentro de tu partida. Los días grises de antes de hoy ya no se pueden llenar: el reto es en vivo.</div>`, keep);
+  const $=id=>document.getElementById(id);
+  if($('abFile')) $('abFile').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) saveAlbumPhoto(f); };
+  document.querySelectorAll('[data-ab]').forEach(b=>b.addEventListener('click',()=>{ ALB_VIEW=b.dataset.ab; openAlbum(true); }));
+  if($('abClose')) $('abClose').onclick=()=>{ ALB_VIEW=null; openAlbum(true); };
+  if($('abDel')) $('abDel').onclick=()=>{ if(!confirm('¿Borrar esta foto del álbum?')) return; albumLog=Object.assign({},albumLog); delete albumLog[ALB_VIEW]; saveJSON('game10-album', albumLog); ALB_VIEW=null; scheduleGameCheck(); openAlbum(true); };
+}
+/* memoria del día: foto, pasos y día especial */
+(function(){
+  if(typeof dayDigest!=='function') return; const _dd=dayDigest; dayDigest=function(d){ const out=_dd(d);
+    if(emergOn(d)) out.push('día especial (plan de emergencia)');
+    const st=stepsOn(d); if(st>=1000) out.push(`${wFmt(st)} pasos`);
+    if((albumLog||{})[d]) out.push('foto del reto');
+    const cp=+clipPostLog[d]||0; if(cp) out.push(`${cp} clip${cp>1?'s':''} subidos`);
+    const dp=+dropLog[d]||0; if(dp) out.push(`${dp} acción${dp>1?'es':''} de dropshipping`);
+    return out; };
+})();
 </script>
 <script>if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }); }</script>
 </body>
