@@ -3237,7 +3237,8 @@ function setEmerg(on, reason){ const t=today(); emergLog=Object.assign({},emergL
 const RETO = {start:'2026-11-16', end:'2026-12-31', name:'Reto 45 días'};
 function retoDay(d){ d=d||today(); if(d<RETO.start || d>RETO.end) return 0; return Math.round((gDay(d)-gDay(RETO.start))/86400000)+1; }
 function retoTotal(){ return Math.round((gDay(RETO.end)-gDay(RETO.start))/86400000)+1; }
-const RETO_PROGRAM = {1:{t:'A',n:'Pecho y hombros'}, 2:{t:'D',n:'Torso estético (martes de colegio: sin piernas)'}, 3:{t:'B',n:'Espalda y bíceps'}, 4:{t:'F',n:'Brazos y hombros (jueves de colegio)'}, 5:{t:'C',n:'Piernas'}, 6:{t:'E',n:'Cuerpo completo'}, 0:{t:'K',n:'Descanso activo: pasos largos y abdomen'}};
+const RETO_PROGRAM = {1:{t:'A',n:'Pecho alto y hombro lateral'}, 2:{t:'B',n:'Espalda y bíceps (colegio: sin piernas)'}, 3:{t:'C',n:'Piernas completas'}, 4:{t:'H',n:'Hombros completos y tríceps (colegio)'}, 5:{t:'G',n:'Pecho y espalda · grosor y brazos'}, 6:{t:'P',n:'Femoral, glúteo y pantorrilla'}, 0:{t:'K',n:'Descanso activo: pasos largos'}};
+function absDay(d){ d=d||today(); const a=Math.round((gDay(d)-gDay(RETO.start))/86400000); return ((a%2)+2)%2===0; }
 function dayMissions(d){
   if(emergOn(d)) return [
     {id:'eweigh', name:'Pesarte', xp:'+15', done: weightLog.some(e=>e.date===d)},
@@ -7689,6 +7690,9 @@ const FIT_DAYS = {
   D:{name:'Torso estético', focus:'Pecho alto, espalda, hombros y abdomen: el look que buscas', slots:[['inc_db','smith_inc'],['lat_pd','neutral_pd'],['arnold','ohp'],['cable_lat','lat_raise'],['csr','db_row'],['curl_inc','preacher'],['tri_oh_cable','tri_oh'],['ab_wheel','cable_crunch']]},
   F:{name:'Brazos y hombros', focus:'Hombros 3D y brazos llenos', slots:[['cable_lat','lat_raise'],['arnold','ohp'],['rev_deck','rear_db'],['curl_bb','curl_inc'],['close_bench','skull'],['preacher','conc_curl'],['tri_rope','tri_oh_cable'],['curl_ham','cable_curl'],['shrug']]},
   E:{name:'Cuerpo completo', focus:'Todo el cuerpo con buen volumen', slots:[['rdl','hip_thrust'],['bulgarian','lunge'],['inc_db','machine_press'],['lat_pd','pullup'],['lat_raise','cable_lat'],['curl_ham','cable_curl'],['tri_rope','skull'],['plank','russian']], legs:true},
+  H:{name:'Hombros completos', focus:'Deltoide frontal, lateral y posterior, trapecio y tríceps', slots:[['ohp','arnold'],['cable_lat','lat_raise'],['machine_lat','lat_raise'],['rev_deck','rear_db'],['face_pull'],['shrug'],['tri_oh_cable','skull'],['tri_rope']]},
+  G:{name:'Pecho y espalda', focus:'Pecho superior, espalda con grosor y cierre de brazos', slots:[['inc_db','smith_inc'],['bench','machine_press'],['csr','bb_row'],['cable_row','db_row'],['cable_fly','pec_deck'],['curl_inc','curl_bb'],['tri_rope','skull']]},
+  P:{name:'Femoral y glúteo', focus:'Cadena posterior: femoral, glúteo y pantorrilla', slots:[['rdl'],['hip_thrust'],['bulgarian','lunge'],['seated_curl','leg_curl'],['calf','seated_calf'],['goblet','leg_press']]},
   K:{name:'Cardio y abdomen', focus:'Hoy no hay pesas: cardio largo y core', slots:[['plank'],['leg_raise','crunch'],['russian'],['calf']]},
 };
 const FIT_ROT = ['A','B','C','D','F','E'];
@@ -7699,7 +7703,7 @@ const FIT_Q = [
   {k:'other', q:'¿Algo más de actividad hoy?', o:[['nada','Nada más'],['colegio','Entreno en el colegio'],['futbol','Fútbol']]},
   {k:'energy', q:'¿Cómo te sientes?', o:[['alta','Con todo'],['normal','Normal'],['baja','Cansado']]},
   {k:'pain', q:'¿Algo te molesta?', o:[['nada','Nada'],['hombro','Hombro'],['rodilla','Rodilla'],['espalda','Espalda baja'],['muneca','Muñeca']]},
-  {k:'want', q:'¿Qué quieres trabajar?', o:[['auto','Lo que toque'],['A','Pecho y hombros'],['B','Espalda y bíceps'],['C','Piernas'],['D','Torso estético'],['F','Brazos y hombros'],['E','Cuerpo completo']]},
+  {k:'want', q:'¿Qué quieres trabajar?', o:[['auto','Lo que toque'],['A','Pecho y hombros'],['B','Espalda y bíceps'],['C','Piernas'],['H','Hombros completos'],['G','Pecho y espalda'],['P','Femoral y glúteo'],['D','Torso estético'],['F','Brazos y hombros'],['E','Cuerpo completo']]},
 ];
 function fitDefaults(){ const wd=gDay(today()).getUTCDay(); return {where:'gym', mode:'hiper', time:'60', other:(wd===2||wd===4)?'colegio':'nada', energy:'normal', pain:'nada', want:'auto'}; }
 
@@ -7739,6 +7743,10 @@ function designWorkout(a){
   const cmLeft=Math.max(0,60-Math.round(cardioMin(today()))), comboCardio=Math.min(25, Math.max(15, cmLeft)), liftMin = mode==='combo' ? Math.max(20, min-comboCardio) : min;
   const maxEx = type==='K' ? 4 : mode==='circuito' ? (min<=30?4:min<=45?5:6) : liftMin<=30 ? 4 : liftMin<=45 ? 5 : liftMin<=60 ? 6 : 8;
   picks=picks.slice(0,maxEx);
+  if(type!=='K'){
+    if(!absDay(today())){ picks=picks.filter(p=>exGroup(p.id)!=='abdomen'); notes.push('Hoy el abdomen descansa (lo trabajas un día sí y un día no). Mañana sí toca.'); }
+    else { if(!picks.some(p=>exGroup(p.id)==='abdomen')){ const exAb=slotPick(['hang_leg','cable_crunch','ab_wheel','leg_raise'], a, blk); if(exAb) picks.push({id:exAb, slot:null}); } notes.push('Hoy sí toca abdomen: va al final de la sesión.'); }
+  }
   const ex=picks.map(p=>{ const E=EX[p.id], comp=E[4]==='c'; let sets, reps=E[5], rest=E[6];
     if(mode==='circuito'){ sets=min>=60?4:3; reps=comp?'10-12':'12-15'; rest=20; }
     else { sets = comp ? (liftMin>=60?4:3) : 3; if(a.energy==='baja') sets=Math.max(2,sets-1); if(mode==='combo') rest=comp?90:45; }
@@ -7771,7 +7779,7 @@ async function designWithClaude(a, base){
   const s=await claudeSample(); if(!s || !s.json) return null;
   const hist=Object.keys(fitData.days||{}).sort().slice(-7).map(d=>{ const D=fitData.days[d]; return D.plan?`${d}: ${D.plan.name}${D.done?' (completo)':''}`:null; }).filter(Boolean);
   const w=weightLog.length?weightLog[weightLog.length-1].kg:(bodyInfo.weight||91);
-  const prompt=`Eres el entrenador personal de Iker (1.80 m, ${w} kg). Su meta: físico estético tipo Mark Wahlberg en los 90 (hombros anchos, espalda en V, brazos marcados, abdomen visible), bajar grasa sin perder músculo. Entrena gym 5–6 días por semana y camina 10,000 pasos diarios. Según sus fotos: buena base de hombros y brazos; lo que más le estorba es la grasa del torso y la cara. Prioridades: perder grasa, deltoide lateral y espalda ancha (la V), pecho superior. Es menor de edad: nada extremo, técnica primero.
+  const prompt=`Eres el entrenador personal de Iker (1.80 m, ${w} kg). Su meta: físico estético tipo Mark Wahlberg en los 90 (hombros anchos, espalda en V, brazos marcados, abdomen visible), bajar grasa sin perder músculo. Entrena gym 5–6 días por semana y camina 10,000 pasos diarios. Análisis de su video: buena base (clavículas anchas, bíceps con pico, espalda alta con músculo, cuádriceps con masa) tapada por grasa en abdomen bajo, caderas y pecho; de espalda aún no se abre la V y le falta tapa de hombro lateral; de lado adelanta la cadera. Prioridades: perder grasa, dorsal ancho y deltoide lateral, pecho superior, core y postura. Abdomen SOLO un día sí y un día no: hoy ${absDay()?'SÍ toca':'NO toca (no incluyas abdomen)'}. Es menor de edad: nada extremo, técnica primero.
 Enfoque: hipertrofia (crecer músculo) con progresión doble, 10–20 series por músculo a la semana. Tipo de sesión de hoy: ${a.mode==='combo'?'pesas + cardio al final':a.mode==='circuito'?'circuito de pesas con cardio entre ejercicios':'pesas para crecer'}.
 Hoy respondió: lugar=${a.where}, tiempo=${a.time} min, otra actividad=${a.other}, energía=${a.energy}, molestia=${a.pain}, quiere=${a.want}.
 Últimos entrenos: ${hist.join('; ')||'ninguno'}.
@@ -8018,16 +8026,17 @@ function fitMetasHTML(){
       <div class="w-form two" style="margin:10px 0 0;"><label>¿Cuánto tienes hoy en tu cuenta? ($)<input type="number" id="glBal" min="0" step="100" inputmode="numeric" placeholder="${Math.round(g.m.est)||''}"></label><button class="w-go solid" id="glBalSave">Actualizar</button></div>
       ${due?`<div class="gl-row" style="margin-top:12px;"><span>Multas por antojos</span><b>$${wFmt(due)}</b></div><button class="w-go wide" id="glPay" style="margin-top:8px;">Ya las aparté para mi meta</button>`:''}
       <div class="gl-s" style="margin-top:10px;">Para llegar: cierra clientes de Vantia. Un paquete de página web son $9,997: ${g.left>0?`te faltan unos ${Math.ceil(g.left/9997)} paquetes o su equivalente en mensualidades.`:'ya llegaste.'}</div></div>
-    <div class="gl-card"><div class="ft-k">INTERPREPAS</div><div class="gl-big">${g.di>0?g.di:0}<span> días</span></div>
+    ${c.inter?`<div class="gl-card"><div class="ft-k">INTERPREPAS</div><div class="gl-big">${g.di>0?g.di:0}<span> días</span></div>
       ${g.w!=null?`<div class="gl-row"><span>Peso hoy</span><b>${g.w} kg</b></div>`:''}
       ${g.projInter!=null?`<div class="gl-row"><span>A tu ritmo llegas con</span><b>${g.projInter.toFixed(1)} kg</b></div>`:''}
       <div class="gl-s">En estas semanas lo que más cambia cómo te ves: bajar la grasa del abdomen sin perder músculo, hombros y espalda más anchos, y desinflamarte quitando azúcar. Cada día cuenta.</div>
-      <div class="w-form two" style="margin:10px 0 0;"><label>Fecha del Interprepas<input type="date" id="glInter" value="${c.inter}"></label><button class="w-go" id="glInterSave">Guardar</button></div></div>
+      <div class="w-form two" style="margin:10px 0 0;"><label>Fecha del Interprepas<input type="date" id="glInter" value="${c.inter}"></label><button class="w-go" id="glInterSave">Guardar</button></div></div>`:''}
     <div class="gl-card"><div class="ft-k">TU ANÁLISIS 360 · DE TUS FOTOS Y VIDEO</div>
-      <div class="gl-s" style="margin-top:6px;">Tienes buena estructura: hombros con base, brazos con forma y antebrazo marcado. Lo que tapa todo es una capa de grasa que se nota en la cara y el torso. No te falta músculo para tu edad: te sobra grasa encima. Ese es el orden del plan.</div>
-      <div class="lr-key"><b>1. Perder grasa (lo que más te va a cambiar)</b>Déficit moderado con tus macros, 10,000 pasos diarios y cero azúcar líquida. La cara y la cintura son lo primero que se afila.</div>
-      <div class="lr-key"><b>2. Deltoide lateral y espalda ancha</b>Elevaciones laterales y jalones casi a diario: hacen la V y te hacen ver más delgado de cintura sin perder un gramo más.</div>
-      <div class="lr-key"><b>3. Pecho superior y brazos</b>Press inclinado primero en tus días de empuje, curls e tríceps con progresión de peso.</div>
+      <div class="gl-s" style="margin-top:6px;">De tu video del 16 de noviembre: tienes mejor base de la que parece. Clavículas anchas, bíceps con pico al flexionar, espalda alta con músculo cuando posas y cuádriceps con masa. Lo que lo tapa es una capa pareja de grasa: abdomen bajo, caderas y pecho. Cuando aprietas, el músculo aparece: está abajo, no falta. El plan es destaparlo.</div>
+      <div class="lr-key"><b>1. Grasa: abdomen bajo, caderas y pecho</b>Es lo único que separa tu cuerpo relajado de tu cuerpo en pose. Déficit con tus macros, 10,000 pasos y cero azúcar. El pecho se afila solo al bajar grasa; no es falta de músculo.</div>
+      <div class="lr-key"><b>2. Dorsal ancho y deltoide lateral</b>De espalda relajado todavía no se abre la V: jalones y dominadas estirando bien arriba, y elevaciones laterales 2–3 veces por semana para la tapa del hombro.</div>
+      <div class="lr-key"><b>3. Pecho superior</b>Relajado se ve plano arriba: press inclinado siempre primero en tus días de pecho.</div>
+      <div class="lr-key"><b>4. Postura y core</b>En tu vista de lado la cadera se va al frente y la panza gana. Core fuerte un día sí y un día no, y mete la cadera al estar de pie: solo eso ya te quita barriga visual.</div>
       <div class="gl-s">Tu semana del reto:</div>
       ${[1,2,3,4,5,6,0].map(w=>`<div class="w-xprow"><span>${['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'][w]}</span><b style="font-family:inherit;font-weight:500;color:${gDay(today()).getUTCDay()===w?'#f1d99a':'#bdbdbd'};white-space:normal;text-align:right;">${RETO_PROGRAM[w].n}</b></div>`).join('')}
       ${retoDay(today())?`<div class="gl-s" style="margin-top:8px;">Vas en el <b style="color:#fff">día ${retoDay(today())} de ${retoTotal()}</b> del reto (16 nov – 31 dic). Tu foto diaria está en Álbum.</div>`:''}</div>
@@ -8042,7 +8051,7 @@ function bindMetas(){ const $=id=>document.getElementById(id);
   $('glBalSave').onclick=()=>{ const v=parseFloat($('glBal').value); if(!(v>=0)) return; fitData.balance=(fitData.balance||[]).filter(b=>b.date!==today()); fitData.balance.push({date:today(), amount:v}); fitSave(); renderGoalPill(); openFisico('metas',true); worldToast('Saldo actualizado', `$${wFmt(v)} · te faltan $${wFmt(Math.max(0,fitCfg().money-v))}`); };
   if($('glPay')) $('glPay').onclick=()=>{ (fitData.fines||[]).forEach(f=>f.paid=true); fitSave(); openFisico('metas',true); worldToast('Multas apartadas','Ese dinero ya trabaja para tu meta'); };
   if($('glBdaySave')) $('glBdaySave').onclick=()=>{ const v=$('glBday').value; if(!v) return; fitData.cfg=Object.assign({},fitData.cfg,{turns18:v}); fitSave(); renderGoalPill(); openFisico('metas',true); };
-  $('glInterSave').onclick=()=>{ const v=$('glInter').value; if(!v) return; fitData.cfg=Object.assign({},fitData.cfg,{inter:v}); fitSave(); renderGoalPill(); openFisico('metas',true); };
+  if($('glInterSave')) $('glInterSave').onclick=()=>{ const v=$('glInter').value; if(!v) return; fitData.cfg=Object.assign({},fitData.cfg,{inter:v}); fitSave(); renderGoalPill(); openFisico('metas',true); };
 }
 
 /* ---------- Ganchos con el resto del juego ---------- */
